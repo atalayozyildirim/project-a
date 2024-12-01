@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emp-mongo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: emp-mongo
+  template:
+    metadata:
+      labels:
+        app: emp-mongo
+    spec:
+      containers:
+        - name: emp-mongo
+          image: mongo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: emp-mongo-srv
+spec:
+  selector:
+    app: emp-mongo
+  ports:
+    - protocol: TCP
+      port: 27017
+      targetPort: 27017

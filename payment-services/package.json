@@ -1,0 +1,21 @@
+{
+  "name": "payment-services",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "@types/amqplib": "^0.10.5",
+    "@types/express": "^5.0.0",
+    "amqplib": "^0.10.4",
+    "express": "^4.21.1",
+    "express-validator": "^7.2.0",
+    "microserivce-common": "^1.0.48",
+    "mongoose": "^8.8.2",
+    "stripe": "^17.4.0"
+  }
+}

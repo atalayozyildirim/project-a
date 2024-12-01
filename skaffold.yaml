@@ -1,0 +1,98 @@
+apiVersion: skaffold/v4beta3
+kind: Config
+manifests:
+  rawYaml:
+    - ./infra/k8s/*
+build:
+  local:
+    push: false
+  artifacts:
+    - image: project-a/client
+      context: client
+      docker:
+        dockerfile: DockerFile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: project-a/auth
+      context: auth-services
+      docker:
+        dockerfile: DockerFile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: project-a/customer
+      context: customers
+      docker:
+        dockerfile: DockerFile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: project-a/order
+      context: order
+      docker:
+        dockerfile: DockerFile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image : project-a/product
+      context: product
+      docker:
+        dockerfile: DockerFile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: project-a/employer
+      context: employers
+      docker:
+        dockerfile: DockerFile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: project-a/notification
+      context: notification
+      docker:
+        dockerfile: DockerFile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: project-a/expirations
+      context: expirations
+      docker:
+        dockerfile: DockerFile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: project-a/payment
+      context: payment-services
+      docker:
+        dockerfile: DockerFile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: project-a/xlsx
+      context: xlsx-services
+      docker:
+        dockerfile: DockerFile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: project-a/invoice
+      context: invoice
+      docker:
+        dockerfile: DockerFile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+      

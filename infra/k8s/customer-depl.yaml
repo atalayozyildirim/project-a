@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: customer
+  template:
+    metadata:
+      labels:
+        app: customer
+    spec:
+      containers:
+        - name: customer
+          image: project-a/customer
+          ports:
+            - containerPort: 3000
+          env:
+            - name: MONGO_URI
+              value: mongodb://customer-mongo-srv:27017/auth
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+            - name: REDIS_URI
+              value: redis://auth-redis-srv:6379
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+          
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: customer-srv
+spec:
+  selector:
+    app: customer
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000

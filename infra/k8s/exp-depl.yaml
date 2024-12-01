@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: exp-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: exp
+  template:
+    metadata:
+      labels:
+        app: exp
+    spec:
+      containers:
+        - name: exp
+          image: project-a/expirations
+          env:
+            - name: RABBITMQ_URI
+              value: amqp://user:password@rabbitmq-srv:5672
+            - name: REDIS_URL
+              value: redis://redis-srv:6379
+          ports:
+            - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: exp-srv
+spec:
+  selector:
+    app: exp
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000

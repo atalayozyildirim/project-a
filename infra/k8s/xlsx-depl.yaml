@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: xlsx-depl
+  labels:
+    app: xlsx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: xlsx
+  template:
+    metadata:
+      labels:
+        app: xlsx
+    spec:
+      containers:
+        - name: xlsx
+          image: project-a/xlsx
+          ports:
+            - containerPort: 3000
+          env:
+            - name: MONGO_URI
+              value: mongodb://xlsx-mongo-srv:27017/xlsx
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: xlsx-srv
+spec:
+  selector:
+    app: xlsx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000

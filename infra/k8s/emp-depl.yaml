@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emp-deployment
+  labels:
+    app: emp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: emp
+  template: 
+    metadata:
+      labels:
+        app: emp
+    spec:
+      containers:
+        - name: emp
+          image: project-a/employer
+          ports:
+            - containerPort: 3000
+          env:
+            - name: MONGO_URI
+              value: mongodb://emp-mongo-srv:27017/employer
+            - name: REDIS_URI
+              value: redis://auth-redis-srv:6379
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+            
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: emp-srv
+spec:
+  selector:
+    app: emp
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000

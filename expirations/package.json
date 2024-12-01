@@ -1,0 +1,22 @@
+{
+  "name": "expirations",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "scripts": {
+    "dev": "bun --watch index.ts"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@types/amqplib": "^0.10.5",
+    "@types/express": "^5.0.0",
+    "amqplib": "^0.10.4",
+    "bull": "^4.16.4",
+    "express": "^4.21.1",
+    "microserivce-common": "^1.0.38"
+  }
+}

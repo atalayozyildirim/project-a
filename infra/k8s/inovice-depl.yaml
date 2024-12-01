@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: invoice-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: invoice
+  template:
+    metadata:
+      labels:
+        app: invoice
+    spec:
+      containers:
+        - name: invoice
+          image: project-a/invoice
+          ports:
+            - containerPort: 3000
+          env:
+            - name: MONGO_URI
+              value: mongodb://invoice-mongo-srv:27017/invoice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: invoice-srv
+spec:
+  selector:
+    app: invoice
+  ports:
+    - name: invoice
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

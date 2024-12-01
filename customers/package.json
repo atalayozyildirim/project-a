@@ -1,0 +1,27 @@
+{
+  "name": "customers",
+  "version": "1.0.0",
+  "main": "./src/index.ts",
+  "scripts": {
+    "start": "tsc-watch --onSuccess \"node dist/index.js\"",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.21.1",
+    "express-validator": "^7.2.0",
+    "jsonwebtoken": "^9.0.2",
+    "microserivce-common": "^1.0.48",
+    "mongoose": "^8.8.2",
+    "tsc-watch": "^6.2.1"
+  },
+  "devDependencies": {
+    "@types/amqplib": "^0.10.5",
+    "@types/express": "^5.0.0",
+    "@types/express-validator": "^2.20.33",
+    "@types/jsonwebtoken": "^9.0.7"
+  },
+  "author": "Atalay ozyildirim",
+  "license": "ISC",
+  "description": ""
+}
