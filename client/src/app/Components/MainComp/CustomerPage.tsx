@@ -3,7 +3,8 @@ import CardTable from "../Card/CardTable";
 export default function CustomerPage() {
   return (
     <>
-      <div className="min-h-screen p-10">
+      <div className="min-h-screen  w-full p-10">
+        <h1 className="text-2xl font-bold hover:underline">Customers</h1>
         <CardTable
           thead_one="Name"
           thead_two="Email"

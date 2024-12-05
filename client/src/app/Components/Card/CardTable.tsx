@@ -5,12 +5,16 @@ interface CardTableProps {
   thead_three: string;
   thead_four: string;
   thead_five?: string;
+  thead_six?: string;
+  thead_eight?: string;
   data?: {
     thead_one: string;
     thead_two: string;
     thead_three: string;
     thead_four: string;
     thead_five?: string;
+    thead_six?: string;
+    thead_eight?: string;
   }[];
   children?: React.ReactNode;
 }
@@ -21,39 +25,50 @@ export default function CardTable({
   thead_three,
   thead_four,
   thead_five,
+  thead_six,
+  thead_eight,
   data,
 }: CardTableProps) {
   const router = useRouter();
 
   return (
     <>
-      <div className="w-full ml-1 mt-5 bg-transparent min-h-screen justify-center items-center">
+      <div className="w-full ml-1- mt-5 bg-transparent min-h-screen justify-center items-center">
         <div className="overflow-x-auto">
-          <table className="min-w-full text-white rounded-xl ">
-            <thead className="">
+          <table className="min-w-full text-white rounded-xl">
+            <thead className="bg-[#141517]">
               <tr>
-                <th className="py-2 px-4 text-left w-1/5">{thead_one}</th>
-                <th className="py-2 px-4 text-left w-1/5">{thead_two}</th>
-                <th className="py-2 px-4 text-left w-1/5">{thead_three}</th>
-                <th className="py-2 px-4 text-left w-1/5">{thead_four}</th>
+                <th className="py-2 px-4 text-left">{thead_one}</th>
+                <th className="py-2 px-4 text-left">{thead_two}</th>
+                <th className="py-2 px-4 text-left">{thead_three}</th>
+                <th className="py-2 px-4 text-left">{thead_four}</th>
                 {router.pathname === "/invoice" ? (
-                  <th className="py-2 px-4 text-left w-1/5">{thead_five}</th>
+                  <>
+                    <th className="py-2 px-4 text-left">{thead_five}</th>
+                    <th className="py-2 px-4 text-left">{thead_six}</th>
+                    <th className="py-2 px-4 text-left">{thead_eight}</th>
+                  </>
                 ) : null}
               </tr>
             </thead>
             <tbody className="">
               {data?.map((item, index) => (
-                <tr key={index} className="hover:bg-gray-800">
+                <tr key={index} className="hover:bg-[#141517]">
                   <td className="py-2 px-4">{item.thead_one}</td>
                   <td className="py-2 px-4">{item.thead_two}</td>
                   <td className="py-2 px-4">{item.thead_three}</td>
                   <td className="py-2 px-4">{item.thead_four}</td>
                   {router.pathname === "/invoice" ? (
-                    <td className="py-2 px-4">
-                      {thead_five && item.thead_five}
-                    </td>
+                    <>
+                      <td className="py-2 px-4">
+                        {thead_five && item.thead_five}
+                      </td>
+                      <td>{thead_six && item.thead_six}</td>
+                      <td>{thead_six && item.thead_eight}</td>
+                      <td></td>
+                    </>
                   ) : null}
-                  {router.pathname === "/customer" ? (
+                  {router.pathname === "/customers" ? (
                     <td className="py-2 px-4">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -61,7 +76,7 @@ export default function CardTable({
                         viewBox="0 0 24 24"
                         strokeWidth={1.5}
                         stroke="currentColor"
-                        className="size-6"
+                        className="size-6 cursor-pointer"
                       >
                         <path
                           strokeLinecap="round"

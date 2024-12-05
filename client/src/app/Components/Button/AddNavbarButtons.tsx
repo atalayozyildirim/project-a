@@ -8,9 +8,9 @@ export default function AddNavbarButtons() {
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="black"
-          className="size-10 p-1 cursor-pointer rounded-full hover:bg-gray-200 transition-colors duration-200"
+          strokeWidth={2}
+          stroke="white"
+          className="size-10 p-2 cursor-pointer rounded-full hover:bg-[#313538] transition-colors duration-200"
         >
           <path
             strokeLinecap="round"
