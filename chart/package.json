@@ -1,11 +1,19 @@
 {
   "name": "chart",
   "module": "index.ts",
+  "scripts": {
+    "dev": "bun --watch index.ts"
+  },
   "type": "module",
   "devDependencies": {
     "@types/bun": "latest"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@types/express": "^5.0.0",
+    "axios": "^1.7.9",
+    "express": "^4.21.2"
   }
 }
