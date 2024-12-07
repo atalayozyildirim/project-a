@@ -16,4 +16,5 @@ export enum Subject {
   MailCancelled = "mail:cancelled",
   MailRead = "mail:read",
   MailDeleted = "mail:deleted",
+  InvoiceCreated = "invoice:created",
 }
