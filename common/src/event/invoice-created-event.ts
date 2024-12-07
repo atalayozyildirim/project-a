@@ -6,13 +6,7 @@ export interface InvoiceCreatedEvent {
     id: string;
     version: number;
     status: string;
-    userId: string;
-    expiresAt: string;
+    createdDate: Date;
     totalAmount: number;
-    products: {
-      id: string;
-      quantity: number;
-      price: number;
-    }[];
   };
 }

@@ -95,4 +95,12 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
+    - image: project-a/chart
+      context: chart
+      docker:
+        dockerfile: DockerFile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
       

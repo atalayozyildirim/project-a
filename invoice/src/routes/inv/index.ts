@@ -2,6 +2,9 @@ import express from "express";
 import type { Request, Response } from "express";
 import { body, param, validationResult } from "express-validator";
 import { Invoice } from "../../db/invocieModel";
+import { InvoicePublisher } from "../../event/publiher/InvoicePublisher";
+import { rabbit } from "../../event/RabbitmqWrapper";
+import { Subject } from "microserivce-common";
 
 const router = express.Router();
 
@@ -30,7 +33,7 @@ router.post(
       .withMessage("Total amount is required"),
     body("status").isString().notEmpty().withMessage("Status is required"),
   ],
-  (req: Request, res: Response) => {
+  async (req: Request, res: Response) => {
     if (!validationResult(req)) {
       throw new Error("Validation failed");
     }
@@ -45,6 +48,14 @@ router.post(
     const invoice = Invoice.build(req.body);
 
     invoice.save();
+
+    await new InvoicePublisher(rabbit.client!).publish(Subject.InvoiceCreated, {
+      id: invoice.id,
+      createdDate: invoice.invoiceDate,
+      totalAmount: invoice.totalAmount,
+      version: 3,
+      status: invoice.status,
+    });
 
     res.json({ message: "Invoice added", data: invoice });
   }

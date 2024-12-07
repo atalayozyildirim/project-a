@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chart-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chart-depl
+  template:
+    metadata:
+      labels:
+        app: chart-depl
+    spec:
+      containers:
+        - name: charts
+          image: project-a/chart
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chart-srv
+spec:
+  selector:
+    app: chart-depl
+  ports:
+    - name: chart
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

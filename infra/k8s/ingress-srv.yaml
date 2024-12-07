@@ -87,4 +87,11 @@ spec:
                 name: xlsx-srv
                 port:
                   number: 3000
+          - path: /api/chart/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: chart-srv
+                port:
+                  number: 3000
          

@@ -1,8 +1,8 @@
 import express from "express";
 import index from "./inv/";
-import { AuthCurrentUser } from "microserivce-common";
+import { currentUser } from "microserivce-common";
 const router = express.Router();
 
 // @ts-ignore
-router.use("/invoice", AuthCurrentUser, index);
+router.use("/invoice", currentUser, index);
 export default router;
