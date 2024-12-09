@@ -5,6 +5,8 @@ interface AuthAttrs {
   email: string;
   password: string;
   name: string;
+  lastIpAddress?: string;
+  lastLoginAt?: Date;
 }
 export interface AuthModel extends mongoose.Document {
   email: string;

@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="flex flex-col w-96 p-4    shadow-md rounded">
-        <h2 className="text-left text-2xl mb-4">Welcome back :) </h2>
+        <h2 className="text-left text-2xl mb-4">Welcome back {":)"}</h2>
         <input
           type="text"
           placeholder="Email"

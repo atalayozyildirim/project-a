@@ -2,12 +2,13 @@
 
 ## Overview
 
-This project is a microservices-based crm application that includes several services such as Notification, Expiration, Auth,Order,Invoice ,Payment and Product services. These services interact with RabbitMQ, MongoDB, and Redis to provide a robust and scalable system.
+This project is a microservices-based crm application that includes several services such as Notification, Expiration,Chart,Auth,Order,Invoice ,Payment and Product services. These services interact with RabbitMQ, MongoDB, and Redis to provide a robust and scalable system.
 
 ## Services
 Auth
 client
 Customers
+Chart
 employers
 exprirations
 notification
@@ -39,5 +40,5 @@ xlsx
 ### Clone the Repository
 
 ```sh
-git clone https://github.com/your-username/your-repo.git
+git clone https://github.com/atalayozyildirim/project-a.git
 cd project-a

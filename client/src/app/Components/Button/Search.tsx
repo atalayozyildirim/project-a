@@ -1,6 +1,9 @@
 import React from "react";
 
-export default function Search() {
+interface Props {
+  onClick: () => void;
+}
+export default function Search(Props: Props) {
   return (
     <>
       <svg
@@ -8,6 +11,7 @@ export default function Search() {
         fill="none"
         viewBox="0 0 24 24"
         strokeWidth={2}
+        onClick={Props.onClick}
         stroke="white"
         className="size-10 p-2 cursor-pointer rounded-full hover:bg-[#313538] transition-colors duration-200"
       >

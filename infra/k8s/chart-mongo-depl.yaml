@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: charts-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: charts-mongo
+  template:
+    metadata:
+      labels:
+        app: charts-mongo
+    spec:
+      containers:
+        - name: charts-mongo
+          image: mongo
+          ports:
+            - containerPort: 27017
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: charts-mongo-srv
+spec:
+  selector:
+    app: charts-mongo
+  ports:
+    - protocol: TCP
+      port: 27017
+      targetPort: 27017

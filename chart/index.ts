@@ -4,6 +4,7 @@ import { DbConnect } from "./config/DbConnect";
 import { rabbit } from "./event/RabbitmqWrapper";
 import { OrderListener } from "./event/listener/OrderListener";
 import { InvoiceListener } from "./event/listener/invoiceListener";
+import { CustomerListener } from "./event/listener/CustomerListeners";
 
 const app = express();
 
@@ -11,8 +12,8 @@ app.use("/api", router);
 
 app.listen(3000, async () => {
   try {
-    // if (!Bun.env.MONGO_URI) throw new Error("MONGO_URI is not defined");
-    // if (!Bun.env.RABBITMQ_URI) throw new Error("RABBITMQ_URI is not defined");
+    if (!Bun.env.MONGO_URI) throw new Error("MONGO_URI is not defined");
+    if (!Bun.env.RABBITMQ_URI) throw new Error("RABBITMQ_URI is not defined");
 
     await DbConnect();
 
@@ -20,6 +21,7 @@ app.listen(3000, async () => {
 
     await new OrderListener(rabbit.client!).listen();
     await new InvoiceListener(rabbit.client!).listen();
+    await new CustomerListener(rabbit.client!).listen();
 
     console.log("Server is running on port 3000");
   } catch (error) {

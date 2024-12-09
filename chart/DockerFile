@@ -28,4 +28,4 @@ COPY . .
 
 # run the app
 USER bun
-CMD ["bun", "run", "./src/index.ts"]
+CMD ["bun", "run", "index.ts"]

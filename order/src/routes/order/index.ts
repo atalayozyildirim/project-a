@@ -74,6 +74,7 @@ router.post(
         status: order.status,
         userId: order.userId,
         expiresAt: order.expiresAt.toISOString(),
+        quantity: order.quantity,
         productId: {
           id: product.id,
           name: product.name,

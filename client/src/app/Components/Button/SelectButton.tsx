@@ -3,7 +3,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -20,11 +19,18 @@ export function SelectButton() {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Charts</SelectLabel>
-          <SelectItem value="sales">Sales</SelectItem>
-          <SelectItem value="Revenue">Revenue</SelectItem>
-          <SelectItem value="Lead">Lead Source Chart</SelectItem>
-          <SelectItem value="Conversion">Conversion Rate Chart</SelectItem>
+          <SelectItem className="w-[195px]" value="sales">
+            Sales
+          </SelectItem>
+          <SelectItem className="w-[195px]" value="Revenue">
+            Revenue
+          </SelectItem>
+          <SelectItem className="w-[195x]" value="Lead">
+            Lead Source Chart
+          </SelectItem>
+          <SelectItem className="w-[195px]" value="Conversion">
+            Conversion Rate Chart
+          </SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>

@@ -1,8 +1,11 @@
+import { Subject } from "microserivce-common";
 import express from "express";
 import type { Request, Response } from "express";
 //@ts-ignore
 import { body, validationResult, param } from "express-validator";
 import { Customer } from "../../model/Customer";
+import { CustomerPublisher } from "../../event/Publisher/CustomerPublisher";
+import { rabbit } from "../../event/RabbitMQWrapper";
 
 const router = express.Router();
 
@@ -35,6 +38,17 @@ router.post(
     }
 
     const customer = Customer.build({ name, surname, email, phoneNumber });
+
+    await new CustomerPublisher(rabbit.client!).publish(
+      Subject.CustomerCreated,
+      {
+        id: customer.id,
+        name: customer.name,
+        surname: customer.surname,
+        email: customer.email,
+        phoneNumber: "null",
+      }
+    );
 
     await customer.save();
 

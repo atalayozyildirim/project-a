@@ -1,22 +1,20 @@
 {
   "name": "customers",
   "version": "1.0.0",
-  "main": "./src/index.ts",
   "scripts": {
-    "start": "tsc-watch --onSuccess \"node dist/index.js\"",
-    "build": "tsc"
+    "dev": "bun --watch ./src/index.ts"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "express": "^4.21.1",
+    "express": "^4.21.2",
     "express-validator": "^7.2.0",
     "jsonwebtoken": "^9.0.2",
-    "microserivce-common": "^1.0.48",
-    "mongoose": "^8.8.2",
+    "microserivce-common": "^1.0.84",
+    "mongoose": "^8.8.4",
     "tsc-watch": "^6.2.1"
   },
   "devDependencies": {
-    "@types/amqplib": "^0.10.5",
+    "@types/amqplib": "^0.10.6",
     "@types/express": "^5.0.0",
     "@types/express-validator": "^2.20.33",
     "@types/jsonwebtoken": "^9.0.7"

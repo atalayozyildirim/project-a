@@ -16,8 +16,8 @@ router.post("/register", [
     const { email, password, name } = req.body;
 
     const existingUser = await Auth.find({ email });
-
-    if (!existingUser) {
+    console.log(existingUser);
+    if (existingUser.length === 1) {
       throw new Error("User already exists");
     }
 
