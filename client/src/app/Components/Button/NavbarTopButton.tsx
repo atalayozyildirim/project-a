@@ -6,12 +6,9 @@ import Download from "./Download";
 import Search from "./Search";
 import AddNavbarButtons from "./AddNavbarButtons";
 import AddInput from "../TextArea/AddInput";
-import { useADDNavbar } from "@/context/AddNavbarContext";
 
 export const NavbarTopButton = () => {
   const router = useRouter();
-
-  const { showAddI } = useADDNavbar();
 
   const [showAdd, setShowAdd] = React.useState(false);
 
@@ -29,7 +26,7 @@ export const NavbarTopButton = () => {
           router.pathname != "/chart" ? (
             <>
               <EditNavbar />
-              <AddNavbarButtons setShow={showAddI} />
+              <AddNavbarButtons />
               <Download />
               <Search onClick={showAddInput} />
             </>

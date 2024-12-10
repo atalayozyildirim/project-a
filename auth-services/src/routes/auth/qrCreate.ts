@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
-router.get("/login/qr", async (req: Request, res: Response) => {
+router.get("/login/qr/create", async (req: Request, res: Response) => {
   try {
     const randomString = crypto.randomBytes(16).toString("hex");
 

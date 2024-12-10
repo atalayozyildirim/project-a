@@ -20,6 +20,13 @@ spec:
           env:
             - name: MONGO_URI
               value: mongodb://payment-mongo-srv:27017/payment
+            - name: RABBITMQ_URI
+              value: amqp://user:password@rabbitmq-srv:5672
+            - name: STRIPE_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: stripe-secrets
+                  key: STRIPE_SECRET_KEY
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:

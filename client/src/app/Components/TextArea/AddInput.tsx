@@ -9,9 +9,9 @@ export default function AddInput(Props: ShowProps) {
       <input
         type="text"
         placeholder="Command !help"
-        className="top-0 left-1/2 ml-5 text-white fixed z-[50] transform -translate-x-1/2 w-[80vh]  outline-none  bg-[#141517] shadow-lg h-14 p-1 mt-2 rounded-3xl flex justify-between items-center pr-10"
+        className="top-0 left-1/2 ml-5 text-white fixed z-[50] transform -translate-x-1/2 w-1/2 outline-none  bg-[#141517] shadow-lg h-14 p-1 mt-2 rounded-3xl flex justify-between items-center pr-10"
       />
-      <div className="top-5 mt-1 ml-5 left-1/4 w-8 fixed z-50">
+      <div className="top-5 mt-1 ml-2 left-[65rem] w-8 fixed z-50">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

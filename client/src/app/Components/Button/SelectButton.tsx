@@ -23,13 +23,16 @@ export function SelectButton() {
             Sales
           </SelectItem>
           <SelectItem className="w-[195px]" value="Revenue">
-            Revenue
+            Revenue Drop
           </SelectItem>
           <SelectItem className="w-[195x]" value="Lead">
-            Lead Source Chart
+            Orders
           </SelectItem>
           <SelectItem className="w-[195px]" value="Conversion">
-            Conversion Rate Chart
+            Orders Daily
+          </SelectItem>
+          <SelectItem className="w-[195px]" value="Customers">
+            Customer Monthly
           </SelectItem>
         </SelectGroup>
       </SelectContent>

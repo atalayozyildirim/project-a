@@ -17,6 +17,17 @@ spec:
           image: project-a/client
           ports:
             - containerPort: 3000
+          env:
+            - name: STRIPE_PUBLISHABLE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: stripe-publishable-key
+                  key: STRIPE_PUBLISHABLE_KEY
+            - name: STRIPE_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: stripe-secrets
+                  key: STRIPE_SECRET_KEY
 
 ---
 apiVersion: v1

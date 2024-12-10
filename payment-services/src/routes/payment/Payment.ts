@@ -15,7 +15,7 @@ router.get("/", (req: Request, res: Response) => {
 });
 
 router.post(
-  "/payment",
+  "/",
   [
     body("orderId").not().isEmpty().withMessage("Order Id is required"),
     body("token").not().isEmpty().withMessage("Token is required"),
@@ -27,7 +27,7 @@ router.post(
 
     const { orderId, token } = req.body;
 
-    const order = await Order.findById({ orderId });
+    const order = await Order.findById(orderId);
 
     if (!order) {
       throw new Error("Order not found");

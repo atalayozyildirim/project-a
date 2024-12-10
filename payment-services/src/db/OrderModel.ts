@@ -5,7 +5,7 @@ interface OrderAttr {
   userId: string;
   quantity: number;
   expiresAt: Date;
-  status: OrderStatus;
+  status: string;
   v: number;
 }
 
@@ -13,7 +13,7 @@ interface OrderDoc extends mongoose.Document {
   userId: string;
   quantity: number;
   expiresAt: Date;
-  status: OrderStatus;
+  status: string;
   v: number;
 }
 
@@ -38,7 +38,7 @@ const orderSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.Date,
   },
   status: {
-    type: OrderStatus,
+    type: String,
     required: true,
   },
   v: {

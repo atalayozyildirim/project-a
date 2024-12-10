@@ -4,6 +4,6 @@ import { currentUser } from "microserivce-common";
 const router = express.Router();
 
 //@ts-ignore
-router.use("/order", currentUser, index);
+router.use("/order", index);
 
 export default router;
