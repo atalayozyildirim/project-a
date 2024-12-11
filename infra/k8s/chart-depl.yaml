@@ -25,6 +25,14 @@ spec:
                   key: JWT_KEY
             - name: RABBITMQ_URI
               value: amqp://user:password@rabbitmq-srv:5672
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+
 ---
 apiVersion: v1
 kind: Service

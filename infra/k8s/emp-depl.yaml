@@ -9,7 +9,7 @@ spec:
   selector:
     matchLabels:
       app: emp
-  template: 
+  template:
     metadata:
       labels:
         app: emp
@@ -29,7 +29,14 @@ spec:
                 secretKeyRef:
                   name: jwt-secret
                   key: JWT_KEY
-            
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+
 ---
 apiVersion: v1
 kind: Service

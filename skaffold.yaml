@@ -6,6 +6,7 @@ manifests:
 build:
   local:
     push: false
+    concurrency: 6
   artifacts:
     - image: project-a/client
       context: client
@@ -13,7 +14,7 @@ build:
         dockerfile: DockerFile
       sync:
         manual:
-          - src: 'src/**/*.ts'
+          - src: "src/**/*.ts"
             dest: .
     - image: project-a/auth
       context: auth-services
@@ -21,7 +22,7 @@ build:
         dockerfile: DockerFile
       sync:
         manual:
-          - src: 'src/**/*.ts'
+          - src: "src/**/*.ts"
             dest: .
     - image: project-a/customer
       context: customers
@@ -29,7 +30,7 @@ build:
         dockerfile: DockerFile
       sync:
         manual:
-          - src: 'src/**/*.ts'
+          - src: "src/**/*.ts"
             dest: .
     - image: project-a/order
       context: order
@@ -37,15 +38,15 @@ build:
         dockerfile: DockerFile
       sync:
         manual:
-          - src: 'src/**/*.ts'
+          - src: "src/**/*.ts"
             dest: .
-    - image : project-a/product
+    - image: project-a/product
       context: product
       docker:
         dockerfile: DockerFile
       sync:
         manual:
-          - src: 'src/**/*.ts'
+          - src: "src/**/*.ts"
             dest: .
     - image: project-a/employer
       context: employers
@@ -53,7 +54,7 @@ build:
         dockerfile: DockerFile
       sync:
         manual:
-          - src: 'src/**/*.ts'
+          - src: "src/**/*.ts"
             dest: .
     - image: project-a/notification
       context: notification
@@ -61,7 +62,7 @@ build:
         dockerfile: DockerFile
       sync:
         manual:
-          - src: 'src/**/*.ts'
+          - src: "src/**/*.ts"
             dest: .
     - image: project-a/expirations
       context: expirations
@@ -69,7 +70,7 @@ build:
         dockerfile: DockerFile
       sync:
         manual:
-          - src: 'src/**/*.ts'
+          - src: "src/**/*.ts"
             dest: .
     - image: project-a/payment
       context: payment-services
@@ -77,7 +78,7 @@ build:
         dockerfile: DockerFile
       sync:
         manual:
-          - src: 'src/**/*.ts'
+          - src: "src/**/*.ts"
             dest: .
     - image: project-a/xlsx
       context: xlsx-services
@@ -85,7 +86,7 @@ build:
         dockerfile: DockerFile
       sync:
         manual:
-          - src: 'src/**/*.ts'
+          - src: "src/**/*.ts"
             dest: .
     - image: project-a/invoice
       context: invoice
@@ -93,7 +94,7 @@ build:
         dockerfile: DockerFile
       sync:
         manual:
-          - src: 'src/**/*.ts'
+          - src: "src/**/*.ts"
             dest: .
     - image: project-a/chart
       context: chart
@@ -101,6 +102,5 @@ build:
         dockerfile: DockerFile
       sync:
         manual:
-          - src: 'src/**/*.ts'
+          - src: "src/**/*.ts"
             dest: .
-      

@@ -28,6 +28,13 @@ spec:
                 secretKeyRef:
                   name: stripe-secrets
                   key: STRIPE_SECRET_KEY
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
 
 ---
 apiVersion: v1
