@@ -34,32 +34,6 @@ body {
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
   }
-  .dark {
-    --background: 224 71.4% 4.1%;
-    --foreground: #000000;
-    --card: 224 71.4% 4.1%;
-    --card-foreground: 210 20% 98%;
-    --popover: 224 71.4% 4.1%;
-    --popover-foreground: 210 20% 98%;
-    --primary: 210 20% 98%;
-    --primary-foreground: 220.9 39.3% 11%;
-    --secondary: 215 27.9% 16.9%;
-    --secondary-foreground: 210 20% 98%;
-    --muted: 215 27.9% 16.9%;
-    --muted-foreground: 217.9 10.6% 64.9%;
-    --accent: 215 27.9% 16.9%;
-    --accent-foreground: 210 20% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 20% 98%;
-    --border: 215 27.9% 16.9%;
-    --input: 215 27.9% 16.9%;
-    --ring: 216 12.2% 83.9%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-  }
 }
 
 @layer base {
@@ -82,4 +56,96 @@ body {
   .print-only {
     display: none;
   }
+}
+.invoice-container {
+  width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.invoice-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.invoice-left h1 {
+  margin: 0;
+  font-size: 32px;
+}
+
+.invoice-right {
+  text-align: right;
+}
+
+.invoice-right p {
+  margin: 0;
+}
+
+.qr-code-placeholder {
+  width: 100px;
+  height: 100px;
+  background-color: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.invoice-addresses {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.from-address,
+.to-address {
+  width: 45%;
+}
+
+.from-address h2,
+.to-address h2 {
+  margin-bottom: 5px;
+}
+
+.invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+
+.invoice-table th,
+.invoice-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+.add-item-button {
+  padding: 8px 12px;
+  margin-bottom: 20px;
+}
+
+.invoice-totals {
+  width: 300px;
+  margin-left: auto;
+  margin-top: 20px;
+}
+
+.totals-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+}
+
+.total-amount {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.generate-pdf-button {
+  padding: 10px 15px;
+  margin-top: 20px;
 }
