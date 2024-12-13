@@ -4,7 +4,7 @@ import TaskPage from "@/app/Components/MainComp/TaskPage";
 const Tasks = () => {
   return (
     <Layout>
-      <TaskPage />
+      <TaskPage data={[]} />
     </Layout>
   );
 };

@@ -22,9 +22,7 @@ const EmployersPage = () => {
         />
       )}
       <div className="p-10 w-full  min-h-screen">
-        <h1 className="text-2xl  font-bold hover:underline">
-          {"Employers " + showAdd}
-        </h1>
+        <h1 className="text-2xl  font-bold hover:underline">{"Employers "}</h1>
 
         <CardTable
           thead_one="Name"
