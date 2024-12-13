@@ -6,7 +6,7 @@ export default function profile() {
   return (
     <>
       <Layout>
-        <ProfilePage />
+        <ProfilePage avatarName="" avatarImage="" event="" />
       </Layout>
     </>
   );

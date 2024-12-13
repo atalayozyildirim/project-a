@@ -1,19 +1,28 @@
-import { useADDNavbar } from "@/context/AddNavbarContext";
+import { useRouter } from "next/router";
 import React from "react";
 
-export default function AddNavbarButtons() {
-  const { showAddI } = useADDNavbar();
+interface AddNavbarButtonsProps {
+  onClick: () => void;
+  AutoADDForm: () => void;
+  close: () => void;
+}
+export default function AddNavbarButtons({
+  onClick,
+  close,
+  AutoADDForm,
+}: AddNavbarButtonsProps) {
+  const router = useRouter();
 
   return (
     <>
-      <div className="">
+      <div className="" onClick={close}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={2}
           stroke="white"
-          onClick={showAddI}
+          onClick={router.pathname === "/invoice" ? onClick : AutoADDForm}
           className="size-10 p-2 cursor-pointer rounded-full hover:bg-[#313538] transition-colors duration-200"
         >
           <path

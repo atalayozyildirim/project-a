@@ -1,8 +1,21 @@
+import { useADDNavbar } from "@/context/AddNavbarContext";
 import CardTable from "../Card/CardTable";
+import FormInput from "../TextArea/FormInput";
 
 export default function CustomerPage() {
+  const { showAddI, showAdd } = useADDNavbar();
   return (
     <>
+      {showAdd && (
+        <FormInput
+          fields="Customers"
+          textOne="Name"
+          textTwo="Email"
+          textThree="Phone"
+          textFour="Company"
+          close={showAddI}
+        />
+      )}
       <div className="min-h-screen  w-full p-10">
         <h1 className="text-2xl font-bold hover:underline">Customers</h1>
         <CardTable

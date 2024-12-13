@@ -9,15 +9,19 @@ interface Item {
   total: number;
 }
 
-export default function Invoice() {
+interface InvoiceProps {
+  InvoiceID: string;
+  closeInvoice: () => void;
+}
+
+export default function Invoice(props: InvoiceProps) {
   const [currentDate, setCurrentDate] = useState<string>("");
-  const [invoiceNumber, setInvoiceNumber] = useState<string>("0001");
   const [customerAddress, setCustomerAddress] =
     useState<string>("Customer Address");
   const [items, setItems] = useState<Item[]>([
     { description: "", quantity: 0, unitPrice: 0, total: 0 },
   ]);
-  const [kdv, setKdv] = useState<number>(18);
+  const [kdv, setKdv] = useState<number>(20);
   const [subTotal, setSubTotal] = useState<number>(0);
   const [totalAmount, setTotalAmount] = useState<number>(0);
 
@@ -25,6 +29,8 @@ export default function Invoice() {
     const today = new Date();
     const formattedDate = today.toLocaleDateString("tr-TR");
     setCurrentDate(formattedDate);
+    setKdv(20);
+    console.log(customerAddress, items, kdv, subTotal, totalAmount);
   }, []);
 
   useEffect(() => {
@@ -71,128 +77,136 @@ export default function Invoice() {
   };
 
   return (
-    <div
-      className="invoice-container absolute bg-white top-28 backdrop-blur z-50"
-      id="invoice"
-    >
-      <div className="invoice-header">
-        <div className="invoice-left">
-          <h1>INVOICE LOGO</h1>
-          <p>Date: {currentDate}</p>
+    <>
+      <div
+        className="invoice-container bg-white absolute top-28 left-1/2 transform -translate-x-1/2 z-50"
+        id="invoice"
+      >
+        <div className="invoice-header">
+          <div className="invoice-left">
+            <h1>INVOICE LOGO</h1>
+            <p>Date: {currentDate}</p>
+          </div>
+          <div className="invoice-right">
+            <p>Invoice No: {props.InvoiceID}</p>
+            <div className="qr-code-placeholder">QR CODE</div>
+          </div>
         </div>
-        <div className="invoice-right">
-          <p>Invoice No: {invoiceNumber}</p>
-          <div className="qr-code-placeholder">QR CODE</div>
+        <div className="invoice-addresses">
+          <div className="from-address">
+            <h2>From</h2>
+            <p>
+              <input type="text" placeholder="Name" />
+            </p>
+            <p>
+              <textarea
+                placeholder="Address"
+                className="resize-none w-80"
+                style={{ height: "auto", overflow: "hidden" }}
+                onChange={(e) => {
+                  const input = e.target as HTMLTextAreaElement;
+                  input.style.height = "auto";
+                  input.style.height = `${input.scrollHeight}px`;
+                  setCustomerAddress(input.value);
+                }}
+              />
+            </p>
+          </div>
+          <div className="to-address">
+            <h2>Bill To</h2>
+            <p>
+              {" "}
+              <input type="text" placeholder="Name" />
+            </p>
+            <p>
+              <textarea
+                placeholder="Address"
+                className="resize-none w-80"
+                style={{ height: "auto", overflow: "hidden" }}
+                onChange={(e) => {
+                  const input = e.target as HTMLTextAreaElement;
+                  input.style.height = "auto";
+                  input.style.height = `${input.scrollHeight}px`;
+                  setCustomerAddress(input.value);
+                }}
+              />
+            </p>
+          </div>
         </div>
-      </div>
-      <div className="invoice-addresses">
-        <div className="from-address">
-          <h2>From</h2>
-          <p>
-            <input type="text" placeholder="Name" />
-          </p>
-          <p>
-            <textarea
-              placeholder="Address"
-              className="resize-none w-80"
-              style={{ height: "auto", overflow: "hidden" }}
-              onChange={(e) => {
-                const input = e.target as HTMLTextAreaElement;
-                input.style.height = "auto";
-                input.style.height = `${input.scrollHeight}px`;
-                setCustomerAddress(input.value);
-              }}
-            />
-          </p>
-        </div>
-        <div className="to-address">
-          <h2>Bill To</h2>
-          <p>
-            {" "}
-            <input type="text" placeholder="Name" />
-          </p>
-          <p>
-            <textarea
-              placeholder="Address"
-              className="resize-none w-80"
-              style={{ height: "auto", overflow: "hidden" }}
-              onChange={(e) => {
-                const input = e.target as HTMLTextAreaElement;
-                input.style.height = "auto";
-                input.style.height = `${input.scrollHeight}px`;
-                setCustomerAddress(input.value);
-              }}
-            />
-          </p>
-        </div>
-      </div>
-      <table className="invoice-table border border-black">
-        <thead>
-          <tr>
-            <th>Description</th>
-            <th>Qty</th>
-            <th>Unit Price</th>
-            <th>Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((item, index) => (
-            <tr key={index}>
-              <td>
-                <input
-                  type="text"
-                  value={item.description}
-                  placeholder="Description"
-                  onChange={(e) =>
-                    handleItemChange(index, "description", e.target.value)
-                  }
-                />
-              </td>
-              <td>
-                <input
-                  type="number"
-                  placeholder="quantity"
-                  value={item.quantity}
-                  onChange={(e) =>
-                    handleItemChange(index, "quantity", Number(e.target.value))
-                  }
-                />
-              </td>
-              <td>
-                <input
-                  type="number"
-                  placeholder="unit price"
-                  value={item.unitPrice}
-                  onChange={(e) =>
-                    handleItemChange(index, "unitPrice", Number(e.target.value))
-                  }
-                />
-              </td>
-              <td>{item.total.toFixed(2)}</td>
+        <table className="invoice-table border border-black">
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th>Qty</th>
+              <th>Unit Price</th>
+              <th>Amount</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <button className="add-item-button" onClick={addItem}>
-        Add Item
-      </button>
-      <div className="invoice-totals">
-        <div className="totals-row">
-          <span>Subtotal:</span>
-          <span>{subTotal.toFixed(2)}</span>
+          </thead>
+          <tbody>
+            {items.map((item, index) => (
+              <tr key={index}>
+                <td>
+                  <input
+                    type="text"
+                    value={item.description}
+                    placeholder="Description"
+                    onChange={(e) =>
+                      handleItemChange(index, "description", e.target.value)
+                    }
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    placeholder="quantity"
+                    onChange={(e) =>
+                      handleItemChange(
+                        index,
+                        "quantity",
+                        Number(e.target.value)
+                      )
+                    }
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    placeholder="unit price"
+                    onChange={(e) =>
+                      handleItemChange(
+                        index,
+                        "unitPrice",
+                        Number(e.target.value)
+                      )
+                    }
+                  />
+                </td>
+                <td>{item.total.toFixed(2)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <button className="add-item-button" onClick={addItem}>
+          Add Item
+        </button>
+        <div className="invoice-totals">
+          <div className="totals-row">
+            <span>Subtotal:</span>
+            <span>{subTotal.toFixed(2)}</span>
+          </div>
+          <div className="totals-row">
+            <span>KDV (%{kdv}):</span>
+            <span>{((subTotal * kdv) / 100).toFixed(2)}</span>
+          </div>
+          <div className="totals-row total-amount">
+            <span>Total:</span>
+            <span>{totalAmount.toFixed(2)}</span>
+          </div>
         </div>
-        <div className="totals-row">
-          <span>KDV (%{kdv}):</span>
-          <span>{((subTotal * kdv) / 100).toFixed(2)}</span>
-        </div>
-        <div className="totals-row total-amount">
-          <span>Total:</span>
-          <span>{totalAmount.toFixed(2)}</span>
-        </div>
+        <button className="generate-pdf-button" onClick={generatePDF}>
+          Generate PDF
+        </button>
       </div>
-      <button className="generate-pdf-button" onClick={generatePDF}>
-        Generate PDF
-      </button>
-    </div>
+    </>
   );
 }

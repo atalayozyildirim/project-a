@@ -6,19 +6,29 @@ import Download from "./Download";
 import Search from "./Search";
 import AddNavbarButtons from "./AddNavbarButtons";
 import AddInput from "../TextArea/AddInput";
+import Invoice from "../TextArea/Invoice";
+import { useADDNavbar } from "@/context/AddNavbarContext";
 
 export const NavbarTopButton = () => {
   const router = useRouter();
-
+  const { showAddI } = useADDNavbar();
   const [showAdd, setShowAdd] = React.useState(false);
+  const [showInvoice, setShowInvoice] = React.useState(false);
 
   const showAddInput = () => {
     setShowAdd(!showAdd);
   };
 
+  const showInvoiceInput = () => {
+    setShowInvoice(!showInvoice);
+  };
+
   return (
     <>
       {showAdd ? <AddInput close={showAddInput} /> : null}
+      {router.pathname === "/invoice" && showInvoice ? (
+        <Invoice InvoiceID={"123"} closeInvoice={showInvoiceInput} />
+      ) : null}
       <div className="fixed top-0 left-1/2 transform -translate-x-1/2 w-1/2 z-10 bg-[#141517] shadow-lg h-14 p-1 mt-2 rounded-3xl flex justify-between items-center">
         <div className="flex items-center gap-20 mx-auto">
           {router.pathname != "/home" &&
@@ -26,7 +36,13 @@ export const NavbarTopButton = () => {
           router.pathname != "/chart" ? (
             <>
               <EditNavbar />
-              <AddNavbarButtons />
+              <AddNavbarButtons
+                AutoADDForm={showAddI}
+                onClick={showAddI}
+                close={
+                  router.pathname === "/invoice" ? showInvoiceInput : showAddI
+                }
+              />
               <Download />
               <Search onClick={showAddInput} />
             </>

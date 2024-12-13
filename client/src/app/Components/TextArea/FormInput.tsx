@@ -17,7 +17,7 @@ export default function FormInput({
   textFour,
 }: FormInputProps) {
   return (
-    <div className="flex fixed z-50 min-w-full justify-center items-center min-h-screen ">
+    <div className="flex fixed top-0 mx-auto z-50 min-w-full justify-center items-center min-h-screen ">
       <div className="bg-[#171c1e] p-8 rounded-lg shadow-lg w-full max-w-md">
         <div onClick={close} className="w-8 h-8 mb-4 cursor-pointer">
           <svg

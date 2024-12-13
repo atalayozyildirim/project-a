@@ -40,23 +40,28 @@ body {
   * {
     @apply border-border;
   }
+
   body {
-    @apply bg-foreground text-background;
+    @apply bg-black text-background;
   }
 }
+
 @media print {
   .no-print {
     display: none;
   }
+
   .print-only {
     display: block;
   }
 }
+
 @media screen {
   .print-only {
     display: none;
   }
 }
+
 .invoice-container {
   width: 800px;
   margin: 0 auto;

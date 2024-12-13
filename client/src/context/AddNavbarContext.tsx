@@ -19,7 +19,6 @@ const AddNavbarContext: React.FC<AddNavbarContextProps> = ({ children }) => {
   const [showAdd, setShowAdd] = React.useState(false);
 
   const showAddI = () => {
-    console.log("Ali kırca gibi");
     setShowAdd(!showAdd);
   };
   return (
