@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: email-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: email-mongo
+  template:
+    metadata:
+      labels:
+        app: email-mongo
+    spec:
+      containers:
+        - name: email-mongo
+          image: mongo
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: email-mongo-srv
+spec:
+  selector:
+    app: email-mongo
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000

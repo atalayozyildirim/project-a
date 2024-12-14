@@ -94,4 +94,18 @@ spec:
                 name: chart-srv
                 port:
                   number: 3000
+          - path: /api/task/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: task-srv
+                port:
+                  number: 3000
+          - path: /api/email/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: email-srv
+                port:
+                  number: 3000
          

@@ -6,7 +6,7 @@ manifests:
 build:
   local:
     push: false
-    concurrency: 6
+    concurrency: 4
   artifacts:
     - image: project-a/client
       context: client
@@ -98,6 +98,22 @@ build:
             dest: .
     - image: project-a/chart
       context: chart
+      docker:
+        dockerfile: DockerFile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: project-a/task
+      context: task
+      docker:
+        dockerfile: DockerFile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: project-a/email
+      context: email
       docker:
         dockerfile: DockerFile
       sync:
