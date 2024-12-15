@@ -27,7 +27,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: stripe-secrets
-                  key: STRIPE_SECRET_KEY
+                  key: STRIPE_SECRETS
           resources:
             limits:
               memory: "512Mi"
