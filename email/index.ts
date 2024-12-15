@@ -10,11 +10,11 @@ app.use("/api", router);
 
 app.listen(3000, async () => {
   try {
-    if (Bun.env.MONGO_URI) throw new Error("MONGO_URI not found");
+    if (!Bun.env.MONGO_URI) throw new Error("MONGO_URI not found");
 
     await connectDb();
 
-    console.log("Server is running on port 3000");
+    console.log("Email server is running on port 3000");
   } catch (error) {
     console.log("Error starting server", error);
   }

@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: email-depl
+  labels:
+    app: email
 spec:
   replicas: 1
   selector:
@@ -25,8 +27,8 @@ spec:
               memory: "128Mi"
               cpu: "500m"
           env:
-          - name: MONGO_URI
-            value : "mongodb://email-mongo-srv:27017/email"
+            - name: MONGO_URI
+              value: "mongodb://email-mongo-srv:27017/email"
 ---
 apiVersion: v1
 kind: Service

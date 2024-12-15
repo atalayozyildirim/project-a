@@ -7,6 +7,7 @@ import { rabbit } from "../../event/rabbitmqWrapper";
 import stripe from "../../config/Stripe";
 import { body, validationResult } from "express-validator";
 import { Subject } from "microserivce-common";
+import mongoose from "mongoose";
 
 const router = express.Router();
 
@@ -17,7 +18,11 @@ router.get("/", (req: Request, res: Response) => {
 router.post(
   "/",
   [
-    body("orderId").not().isEmpty().withMessage("Order Id is required"),
+    body("orderId")
+      .isMongoId()
+      .not()
+      .isEmpty()
+      .withMessage("Order Id is required"),
     body("token").not().isEmpty().withMessage("Token is required"),
   ],
   async (req: Request, res: Response) => {
