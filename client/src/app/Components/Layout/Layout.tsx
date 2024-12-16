@@ -2,7 +2,6 @@ import { Navbar } from "@/app/Components/Navbar";
 import { NavbarTopButton } from "../Button/NavbarTopButton";
 import "@radix-ui/themes/styles.css";
 import { AddNavbarContext } from "@/context/AddNavbarContext";
-
 interface LayoutProps {
   children: React.ReactNode;
 }

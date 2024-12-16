@@ -168,7 +168,7 @@ export const Navbar = () => {
           />
 
           <NavbarButton
-            href="/api/exits"
+            href="/api/auth/logout"
             comp={
               <svg
                 xmlns="http://www.w3.org/2000/svg"

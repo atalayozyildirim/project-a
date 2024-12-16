@@ -19,7 +19,7 @@ export class NotificationListener extends BaseConsumer<NotifactionCreatedEvent> 
         from: "",
         to: "",
         subject: "Notification",
-        text: data.message,
+        text: "Seks",
       });
     } catch (err) {
       console.error(err);

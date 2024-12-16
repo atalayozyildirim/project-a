@@ -16,7 +16,7 @@ export default function PaymentPage() {
   useEffect(() => {
     const createPaymentIntent = async () => {
       try {
-        const response = await fetch("/api/payment/", {
+        const response = await fetch("/api/payment", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -26,10 +26,15 @@ export default function PaymentPage() {
             token: "tok_visa",
           }),
         });
+
+        if (!response.ok) {
+          throw new Error("Payment failed");
+        }
+
         const data = await response.json();
         setSecret(data.clientSecret);
-      } catch (err) {
-        console.log(err);
+      } catch (error) {
+        console.log("Error:", error);
       }
     };
 

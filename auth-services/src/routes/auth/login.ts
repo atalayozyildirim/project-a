@@ -65,7 +65,7 @@ router.post(
         userId: user?.id,
       }
     );
-    res.json({ token });
+    res.json({ userId: user?.id, name: user?.name, token });
   }
 );
 
