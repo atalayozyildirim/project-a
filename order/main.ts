@@ -5,13 +5,15 @@ import { rabbit } from "./src/event/RabbitmqWrapper";
 import { ExpiractionListener } from "./src/event/listener/expirations-listener";
 import { ProductUpdatedListener } from "./src/event/listener/product-ticket-updated-listener";
 import router from "./src/routes";
+import { checkAuth } from "microserivce-common";
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api", router);
+//@ts-ignore
+app.use("/api", checkAuth, router);
 
 app.listen(3000, async () => {
   try {

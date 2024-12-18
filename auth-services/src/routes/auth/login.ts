@@ -40,7 +40,10 @@ router.post(
 
     const ipAddress = reqIp.getClientIp(req);
     const currentTime = new Date().toLocaleString();
-    const token = jwt.sign({ id: user?.id }, Bun.env.JWT_KEY!);
+    const token = jwt.sign({ id: user?.id }, Bun.env.JWT_KEY!, {
+      expiresIn: "1h",
+    });
+    const refresh_token = jwt.sign({ id: user?.id }, Bun.env.JWT_KEY!);
 
     if (!rabbit.client) {
       throw new Error("RabbitMQ client is not initialized");
@@ -65,7 +68,17 @@ router.post(
         userId: user?.id,
       }
     );
-    res.json({ userId: user?.id, name: user?.name, token });
+    res.cookie("acsess_token", token, {
+      httpOnly: true,
+      secure: Bun.env.NODE_ENV === "production",
+    });
+
+    res.cookie("refresh_token", refresh_token, {
+      httpOnly: true,
+      secure: Bun.env.NODE_ENV === "production",
+    });
+
+    res.json({ userId: user?.id, name: user?.name, token, refresh_token });
   }
 );
 

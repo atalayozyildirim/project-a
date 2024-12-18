@@ -1,13 +1,15 @@
 import express from "express";
 import router from "./routes";
 import { createDb } from "./db/createDb";
+import { checkAuth } from "microserivce-common";
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api", router);
+//@ts-ignore
+app.use("/api", checkAuth, router);
 
 app.listen(3000, () => {
   try {

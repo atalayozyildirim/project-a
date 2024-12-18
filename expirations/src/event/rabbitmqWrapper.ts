@@ -46,7 +46,7 @@ class RabbitMQWrapper {
         if (i < retries - 1) {
           await new Promise((resolve) => setTimeout(resolve, delay));
         } else {
-          process.exit(1);
+          console.log("Failed to connect to RabbitMQ after all attempts");
         }
       }
     }

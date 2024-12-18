@@ -18,8 +18,8 @@
     "amqplib": "^0.10.5",
     "express": "^4.21.2",
     "i": "^0.3.7",
-    "microserivce-common": "^1.0.59",
-    "mongoose": "^8.8.4",
+    "microserivce-common": "^1.0.88",
+    "mongoose": "^8.9.1",
     "npm": "^10.9.2"
   }
 }

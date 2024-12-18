@@ -1,10 +1,12 @@
 import express from "express";
 import router from "./src/routes";
 import { connectDb } from "./src/db/conenctDb";
+import { checkAuth } from "microserivce-common";
 
 const app = express();
 
-app.use("/api", router);
+//@ts-ignore
+app.use("/api", checkAuth, router);
 
 app.listen(3000, async () => {
   try {

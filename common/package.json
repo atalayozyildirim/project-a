@@ -1,6 +1,6 @@
 {
   "name": "microserivce-common",
-  "version": "1.0.86",
+  "version": "1.0.88",
   "main": "index.ts",
   "types": "dist/index.d.ts",
   "scripts": {

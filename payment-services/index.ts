@@ -2,12 +2,14 @@ import express from "express";
 import { connectDb } from "./src/config/ConenctDb";
 import { rabbit } from "./src/event/rabbitmqWrapper";
 import router from "./src/routes";
+import { checkAuth } from "microserivce-common";
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api", router);
+//@ts-ignore
+app.use("/api", checkAuth, router);
 
 app.listen(3000, async () => {
   try {

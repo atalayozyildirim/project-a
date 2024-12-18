@@ -1,13 +1,13 @@
 "use client";
-
-import React, { useContext, createContext, useState } from "react";
+import React, { useContext, createContext, useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
-  access_token: string;
-  refresh_token: string;
   isAuth: boolean;
+  redirectTo: boolean;
+  error: string;
   user: {
     email: string;
   } | null;
@@ -21,11 +21,13 @@ interface AuthProviderProps {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [access_token, setAccessToken] = useState<string>("");
-  const [refresh_token, setRefreshToken] = useState<string>("");
   const [isAuth, setIsAuth] = useState<boolean>(false);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [user, setUser] = useState<{ email: string } | null>(null);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+  const [redirectTo, setRedirectTo] = useState<boolean>(false);
+
+  const router = useRouter();
 
   const login = async (email: string, password: string) => {
     try {
@@ -40,17 +42,20 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
       if (!res.ok) {
         const errorData = await res.json();
-        throw new Error(errorData.errors || "Login failed");
+        setError(errorData.errors);
+        throw new Error(errorData || "Login failed");
       }
 
       const data = await res.json();
 
-      setAccessToken(data.token);
-      setRefreshToken("");
       setIsAuth(true);
-      setUser(data.userId);
+      setUser(data.user);
+      setIsLoaded(false);
+      setRedirectTo(true);
+      router.push("/home");
     } catch (error) {
       console.log(error);
+      setIsLoaded(false);
     }
   };
 
@@ -72,9 +77,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       const data = await res.json();
 
       console.log("OK", data);
-
-      setAccessToken("");
-      setRefreshToken("");
       setIsAuth(false);
       setUser(null);
     } catch (error) {
@@ -82,16 +84,44 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
+  const checkAuth = async () => {
+    try {
+      const res = await fetch("/api/auth/me", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await res.json();
+
+      if (!res.ok && window.location.pathname !== "/") {
+        router.push("/");
+        throw new Error(data.errors || "Not authenticated");
+      }
+    } catch (error) {
+      console.log("Not Authenticated", error);
+    }
+  };
+
+  useEffect(() => {
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      window.location.pathname !== "/" && checkAuth();
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
   return (
     <AuthContext.Provider
       value={{
         login,
         logout,
-        access_token,
-        refresh_token,
         isAuth,
         user,
         isLoaded,
+        redirectTo,
+        error,
       }}
     >
       {children}

@@ -8,6 +8,7 @@ import { createDb } from "./src/db/createDb";
 import { AuthLoginCreatedListener } from "./src/event/listener/auth-login-created";
 import { rabbit } from "./src/event/rabbitmqWrapper";
 import RedisStore from "connect-redis";
+import cookieParser from "cookie-parser";
 import { currentUser } from "./src/middleware/currentUser";
 
 const app = express();
@@ -16,6 +17,7 @@ configDotenv();
 
 app.set("trust proxy", 1);
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 const redisClient = createClient({ url: Bun.env.REDIS_URI });

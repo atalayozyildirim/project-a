@@ -12,10 +12,11 @@ class EmailService {
 
   connect() {
     this.transporter = nodemailer.createTransport({
-      service: "gmail",
+      service: "yandex",
+      port: 465,
       auth: {
-        user: "",
-        pass: "",
+        user: "cheafchat@yandex.com",
+        pass: "sqjqxhtukebrtrtv",
       },
     });
 

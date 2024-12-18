@@ -5,10 +5,12 @@ import { rabbit } from "./event/RabbitmqWrapper";
 import { OrderListener } from "./event/listener/OrderListener";
 import { InvoiceListener } from "./event/listener/invoiceListener";
 import { CustomerListener } from "./event/listener/CustomerListeners";
+import { checkAuth } from "microserivce-common";
 
 const app = express();
 
-app.use("/api", router);
+//@ts-ignore
+app.use("/api", checkAuth, router);
 
 app.listen(3000, async () => {
   try {

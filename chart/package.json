@@ -17,7 +17,7 @@
     "amqplib": "^0.10.5",
     "axios": "^1.7.9",
     "express": "^4.21.2",
-    "microserivce-common": "^1.0.86",
-    "mongoose": "^8.8.4"
+    "microserivce-common": "^1.0.88",
+    "mongoose": "^8.9.1"
   }
 }

@@ -17,20 +17,22 @@ declare global {
   }
 }
 
-export const currentUser = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  if (!req.session?.jwt) {
+export const checkAuth = (req: Request, res: Response, next: NextFunction) => {
+  // çöz
+  if (
+    !req.session?.jwt ||
+    !req.headers.X_Auth_token ||
+    typeof req.headers.X_Auth_token !== "string"
+  ) {
     return res.status(401).send({ message: "Not authorized" });
   }
 
   try {
+    const token = req.headers.X_Auth_token.split(" ")[1];
     const payload = jwt.verify(
-      req.session.jwt,
+      token!,
       process.env.JWT_KEY!
-    ) as UserPayload;
+    ) as unknown as UserPayload;
     req.currentUser = payload;
   } catch (err) {
     return res.status(401).send({ message: "Not authorized" });
