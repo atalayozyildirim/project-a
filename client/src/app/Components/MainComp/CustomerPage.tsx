@@ -1,8 +1,31 @@
+import { InferGetServerSidePropsType, GetServerSideProps } from "next";
 import { useADDNavbar } from "@/context/AddNavbarContext";
 import CardTable from "../Card/CardTable";
 import FormInput from "../TextArea/FormInput";
 
-export default function CustomerPage() {
+type Repo = {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  company: string;
+};
+
+export const getServerSideProps: GetServerSideProps = (async () => {
+  const res = await fetch("/api/customer/all/1", {
+    method: "GET",
+  });
+
+  const repo: Repo = await res.json();
+
+  return {
+    props: { repo },
+  };
+}) satisfies GetServerSideProps<{ repo: Repo }>;
+
+export default function CustomerPage({
+  repo,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { showAddI, showAdd } = useADDNavbar();
   return (
     <>
@@ -25,40 +48,7 @@ export default function CustomerPage() {
           thead_four="Company"
           data={[
             {
-              thead_one: "John Doe",
-              thead_two: "asfas",
-              thead_three: "123456789",
-              thead_four: "Company A",
-            },
-            {
-              thead_one: "Jane Doe",
-              thead_two: "asfas",
-              thead_three: "123456789",
-              thead_four: "Company B",
-            },
-            {
-              thead_one: "John Doe",
-              thead_two: "asfas",
-              thead_three: "123456789",
-              thead_four: "Company A",
-            },
-            {
-              thead_one: "Jane Doe",
-              thead_two: "asfas",
-              thead_three: "123456789",
-              thead_four: "Company B",
-            },
-            {
-              thead_one: "John Doe",
-              thead_two: "asfas",
-              thead_three: "123456789",
-              thead_four: "Company A",
-            },
-            {
-              thead_one: "Jane Doe",
-              thead_two: "asfas",
-              thead_three: "123456789",
-              thead_four: "Company B",
+              ...repo,
             },
           ]}
         />

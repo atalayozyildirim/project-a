@@ -19,16 +19,12 @@ declare global {
 
 export const checkAuth = (req: Request, res: Response, next: NextFunction) => {
   // çöz
-  if (
-    !req.session?.jwt ||
-    !req.headers.X_Auth_token ||
-    typeof req.headers.X_Auth_token !== "string"
-  ) {
+  if (!req.cookies.acsess_token) {
     return res.status(401).send({ message: "Not authorized" });
   }
 
   try {
-    const token = req.headers.X_Auth_token.split(" ")[1];
+    const token = req.cookies.acsess_token.split(" ")[1];
     const payload = jwt.verify(
       token!,
       process.env.JWT_KEY!

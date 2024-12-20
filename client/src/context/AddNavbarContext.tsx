@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { useAuth } from "./AuthContext";
 
 interface ContextProps {
   showAddI: () => void;
@@ -18,12 +19,14 @@ interface AddNavbarContextProps {
 const AddNavbarContext: React.FC<AddNavbarContextProps> = ({ children }) => {
   const [showAdd, setShowAdd] = React.useState(false);
 
+  const { isAuth } = useAuth();
+
   const showAddI = () => {
     setShowAdd(!showAdd);
   };
   return (
     <Context.Provider value={{ showAddI, showAdd }}>
-      {children}
+      {isAuth && children}
     </Context.Provider>
   );
 };

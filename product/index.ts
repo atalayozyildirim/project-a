@@ -3,11 +3,13 @@ import { connectDatabase } from "./src/config/connectDatabase";
 import { rabbit } from "./src/events/RabbitMQWrapper";
 import router from "./src/routes";
 import { checkAuth } from "microserivce-common";
+import cookieParser from "cookie-parser";
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 //@ts-ignore
 app.use("/api", checkAuth, router);

@@ -29,6 +29,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const router = useRouter();
 
+  const clearCookies = () => {
+    document.cookie.split(";").forEach((cookie) => {
+      const eqPos = cookie.indexOf("=");
+      const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+      document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+    });
+  };
+
   const login = async (email: string, password: string) => {
     try {
       setIsLoaded(true);
@@ -77,6 +85,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       const data = await res.json();
 
       console.log("OK", data);
+      clearCookies();
       setIsAuth(false);
       setUser(null);
     } catch (error) {
@@ -95,23 +104,32 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
       const data = await res.json();
 
-      if (!res.ok && window.location.pathname !== "/") {
-        router.push("/");
-        throw new Error(data.errors || "Not authenticated");
+      if (!res.ok) {
+        setIsAuth(false);
+        setUser(null);
+        if (window.location.pathname !== "/") {
+          router.push("/");
+        }
+        console.log("Not Authenticated", data);
+      } else {
+        setIsAuth(true);
+        setUser(data);
       }
     } catch (error) {
+      setIsAuth(false);
+      setUser(null);
+      if (window.location.pathname !== "/") {
+        router.push("/");
+      }
       console.log("Not Authenticated", error);
     }
   };
 
   useEffect(() => {
-    try {
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      window.location.pathname !== "/" && checkAuth();
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    window.location.pathname !== "/" && checkAuth();
+  }, [isAuth]);
+
   return (
     <AuthContext.Provider
       value={{

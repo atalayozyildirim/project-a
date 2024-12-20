@@ -9,15 +9,17 @@
     "@types/bun": "latest"
   },
   "peerDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "^5.6.3"
   },
   "dependencies": {
-    "@types/amqplib": "^0.10.5",
+    "@types/amqplib": "^0.10.6",
+    "@types/cookie-parser": "^1.4.8",
     "@types/express": "^5.0.0",
     "@types/nodemailer": "^6.4.17",
-    "amqplib": "^0.10.4",
-    "express": "^4.21.1",
-    "microserivce-common": "^1.0.39",
+    "amqplib": "^0.10.5",
+    "cookie-parser": "^1.4.7",
+    "express": "^4.21.2",
+    "microserivce-common": "^1.0.89",
     "nodemailer": "^6.9.16"
   }
 }

@@ -1,4 +1,4 @@
-import express from "express";
+import express, { urlencoded } from "express";
 import router from "./router";
 import { DbConnect } from "./config/DbConnect";
 import { rabbit } from "./event/RabbitmqWrapper";
@@ -6,8 +6,13 @@ import { OrderListener } from "./event/listener/OrderListener";
 import { InvoiceListener } from "./event/listener/invoiceListener";
 import { CustomerListener } from "./event/listener/CustomerListeners";
 import { checkAuth } from "microserivce-common";
+import cookieParser from "cookie-parser";
 
 const app = express();
+
+app.use(express.json());
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
 
 //@ts-ignore
 app.use("/api", checkAuth, router);

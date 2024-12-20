@@ -14,12 +14,14 @@
   },
   "dependencies": {
     "@types/amqplib": "^0.10.6",
+    "@types/cookie-parser": "^1.4.8",
     "@types/express": "^5.0.0",
     "amqplib": "^0.10.5",
+    "cookie-parser": "^1.4.7",
     "express": "^4.21.2",
     "i": "^0.3.7",
-    "microserivce-common": "^1.0.88",
-    "mongoose": "^8.9.1",
+    "microserivce-common": "^1.0.89",
+    "mongoose": "^8.9.2",
     "npm": "^10.9.2"
   }
 }

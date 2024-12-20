@@ -3,10 +3,12 @@ import { connectDatabase } from "./src/config/connectDatabase";
 import helmet from "helmet";
 import router from "./src/routes";
 import { checkAuth } from "microserivce-common";
+import cookieParser from "cookie-parser";
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(helmet());
 
 //@ts-ignore
