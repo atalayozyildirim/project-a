@@ -3,11 +3,21 @@ import CardTable from "../Card/CardTable";
 import { useADDNavbar } from "@/context/AddNavbarContext";
 import FormInput from "../TextArea/FormInput";
 
-const EmployersPage = () => {
+interface EmployersData {
+  name: string;
+  role: string;
+  phone_email: string;
+  salary: string;
+}
+interface EmployersProps {
+  data: EmployersData[];
+}
+const EmployersPage = ({ data }: EmployersProps) => {
   const { showAddI, showAdd } = useADDNavbar();
 
   useEffect(() => {
     console.log("EmployersPage", showAdd);
+    console.log(data);
   }, [showAdd]);
   return (
     <>
@@ -22,8 +32,7 @@ const EmployersPage = () => {
         />
       )}
       <div className="p-10 w-full  min-h-screen">
-        <h1 className="text-2xl  font-bold hover:underline">{"Employers "}</h1>
-
+        <h1 className="text-2xl  font-bold hover:underline">{"Employers"}</h1>
         <CardTable
           thead_one="Name"
           thead_two="Role"

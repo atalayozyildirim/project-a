@@ -8,7 +8,6 @@ const router = express.Router();
 router.get("/all", async (req: Request, res: Response) => {
   const data = await Employer.find({});
 
-  console.log(req.session);
   res.status(200).json({ data });
 });
 
@@ -28,7 +27,7 @@ router.post(
     const empExist = await Employer.findOne({ email });
 
     if (empExist) {
-      res.status(400).json({ message: "Employer already exist" });
+      throw new Error("Employer already exist");
     }
 
     const employer = Employer.build({
@@ -58,7 +57,7 @@ router.put(
     const employer = await Employer.findById(req.params.id);
 
     if (!employer) {
-      res.status(404).json({ message: "Employer not found" });
+      throw new Error("Employer not found");
     }
 
     if (name) employer?.set({ name });
@@ -85,7 +84,7 @@ router.delete(
     const employer = await Employer.findById(req.params.id);
 
     if (!employer) {
-      res.status(404).json({ message: "Employer not found" });
+      throw new Error("Employer not found");
     }
 
     await employer?.deleteOne();
