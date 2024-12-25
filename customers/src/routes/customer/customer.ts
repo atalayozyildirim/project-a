@@ -18,6 +18,7 @@ router.post(
   [
     body("name").isString().trim().notEmpty().isLength({ min: 3, max: 50 }),
     body("surname").isString().trim().notEmpty().isLength({ min: 3, max: 50 }),
+    body("company").isString().trim().notEmpty().isLength({ min: 3, max: 50 }),
     body("email").isEmail().normalizeEmail(),
     body("phoneNumber")
       .isString()
@@ -30,14 +31,20 @@ router.post(
       throw new Error("Validation error");
     }
 
-    const { name, surname, email, phoneNumber } = req.body;
+    const { name, surname, email, phoneNumber, company } = req.body;
 
     const existingCustomer = await Customer.findOne({ email });
     if (existingCustomer) {
       throw new Error("Customer already exists");
     }
 
-    const customer = Customer.build({ name, surname, email, phoneNumber });
+    const customer = Customer.build({
+      name,
+      surname,
+      email,
+      company,
+      phoneNumber,
+    });
 
     await new CustomerPublisher(rabbit.client!).publish(
       Subject.CustomerCreated,

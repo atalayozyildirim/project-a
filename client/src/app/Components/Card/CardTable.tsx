@@ -10,17 +10,15 @@ interface CardTableProps {
   thead_five?: string;
   thead_six?: string;
   thead_eight?: string;
-  data: {
-    data: {
-      tbody_one: string;
-      tbody_two: string;
-      tbody_three: string;
-      tbody_four: string;
-      tbody_five?: string;
-      tbody_six?: string;
-      tbody_eight?: string;
-    }[];
-  };
+  data: Array<{
+    tbody_one: string;
+    tbody_two: string;
+    tbody_three: string;
+    tbody_four: string;
+    tbody_five?: string;
+    tbody_six?: string;
+    tbody_eight?: string;
+  }>;
   children?: React.ReactNode;
 }
 
@@ -36,13 +34,7 @@ export default function CardTable({
 }: CardTableProps) {
   const router = useRouter();
 
-  const d = () => {
-    data.data.map((item) => {
-      console.log(item.tbody_one);
-    });
-  };
-
-  d();
+  console.log(data);
   return (
     <>
       <div className="w-full ml-1- mt-5 bg-transparent min-h-screen justify-center items-center">
@@ -64,8 +56,8 @@ export default function CardTable({
               </tr>
             </thead>
             <tbody className="atalay">
-              {data.data &&
-                data?.data.map((item, index) => (
+              {data &&
+                data.map((item, index) => (
                   <tr key={index} className="hover:bg-[#141517]">
                     <td className="py-2 px-4">{item.tbody_one}</td>
                     <td className="py-2 px-4">{item.tbody_two}</td>

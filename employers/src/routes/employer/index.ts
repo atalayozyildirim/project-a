@@ -19,11 +19,12 @@ router.post(
   [body("Salary").isNumeric().withMessage("Salary is required")],
   [body("email").isEmail().withMessage("Email is required")],
   [body("filed").isString().withMessage("Filed is required")],
+  [body("role").isString().withMessage("Role is required")],
   async (req: Request, res: Response) => {
     if (!validationResult(req)) {
       throw new Error("Validation failed");
     }
-    const { name, surname, phoneNumber, Salary, email, filed } = req.body;
+    const { name, surname, phoneNumber, Salary, email, role, filed } = req.body;
     const empExist = await Employer.findOne({ email });
 
     if (empExist) {
@@ -37,6 +38,7 @@ router.post(
       Salary,
       email,
       filed,
+      role,
     });
 
     await employer.save();
@@ -52,7 +54,7 @@ router.put(
       res.status(400).json({ message: "Invalid id" });
     }
 
-    const { name, surname, phoneNumber, Salary, email, filed } = req.body;
+    const { name, surname, phoneNumber, Salary, email, role, filed } = req.body;
 
     const employer = await Employer.findById(req.params.id);
 
@@ -62,6 +64,7 @@ router.put(
 
     if (name) employer?.set({ name });
     if (surname) employer?.set({ surname });
+    if (role) employer?.set({ role });
     if (phoneNumber) employer?.set({ phoneNumber });
     if (Salary) employer?.set({ Salary });
     if (email) employer?.set({ email });

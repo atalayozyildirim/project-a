@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 interface CustomerAttrs {
   name: string;
   surname: string;
+  company: string;
   email: string;
   phoneNumber: string;
 }
@@ -10,6 +11,7 @@ interface CustomerAttrs {
 interface CustomerDoc extends mongoose.Document {
   name: string;
   surname: string;
+  company: string;
   email: string;
   phonenumber: string;
 }
@@ -24,6 +26,10 @@ const customerSchema = new mongoose.Schema({
     required: true,
   },
   surname: {
+    type: String,
+    required: true,
+  },
+  company: {
     type: String,
     required: true,
   },

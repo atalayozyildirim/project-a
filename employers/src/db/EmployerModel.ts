@@ -4,6 +4,7 @@ interface EmployerAttr {
   name: string;
   surname: string;
   phoneNumber: number;
+  role: string;
   Salary: number;
   email: string;
   filed: string;
@@ -12,6 +13,7 @@ interface EmployerDoc extends mongoose.Document {
   name: string;
   surname: string;
   phoneNumber: number;
+  role: string;
   Salary: number;
   email: string;
   filed: string;
@@ -36,6 +38,10 @@ const employerSchema = new mongoose.Schema(
     },
     phoneNumber: {
       type: Number,
+      required: true,
+    },
+    role: {
+      type: String,
       required: true,
     },
     Salary: {

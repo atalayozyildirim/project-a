@@ -20,6 +20,8 @@ spec:
           env:
             - name: MONGO_URI
               value: mongodb://customer-mongo-srv:27017/auth
+            - name: RABBITMQ_URI
+              value: amqp://user:password@rabbitmq-srv:5672
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
