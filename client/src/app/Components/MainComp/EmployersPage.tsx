@@ -3,16 +3,18 @@ import CardTable from "../Card/CardTable";
 import { useADDNavbar } from "@/context/AddNavbarContext";
 import FormInput from "../TextArea/FormInput";
 
-interface EmployersData {
-  name: string;
-  role: string;
-  email: string;
-  Salary: string;
-  filed: string;
-}
-
 interface EmployersProps {
-  data: EmployersData[];
+  data: {
+    data: {
+      tbody_one: string;
+      tbody_two: string;
+      tbody_three: string;
+      tbody_four: string;
+      tbody_five?: string;
+      tbody_six?: string;
+      tbody_eight?: string;
+    }[];
+  };
 }
 
 const EmployersPage = ({ data }: EmployersProps) => {
@@ -37,13 +39,14 @@ const EmployersPage = ({ data }: EmployersProps) => {
           thead_two="Phone Number"
           thead_three="Salary"
           thead_four="Email"
-          data={data.map((item) => ({
-            tbody_one: item.name,
-            tbody_two: item.role,
-            tbody_three: item.Salary.toString(),
-            tbody_four: item.email,
-            tbody_five: item.filed,
-          }))}
+          data={{
+            data: data.data.map((item) => ({
+              tbody_one: item.tbody_one,
+              tbody_two: item.tbody_two,
+              tbody_three: item.tbody_three,
+              tbody_four: item.tbody_four,
+            })),
+          }}
         />
       </div>
     </>

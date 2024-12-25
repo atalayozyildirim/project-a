@@ -46,11 +46,7 @@ export default function CustomerPage({
           thead_two="Email"
           thead_three="Phone"
           thead_four="Company"
-          data={[
-            {
-              ...repo,
-            },
-          ]}
+          data={repo}
         />
       </div>
     </>
