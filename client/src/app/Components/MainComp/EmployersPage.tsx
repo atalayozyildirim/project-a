@@ -5,21 +5,19 @@ import FormInput from "../TextArea/FormInput";
 
 interface EmployersData {
   name: string;
-  surname: string;
-  phoneNumber: string;
-  salary: string;
+  role: string;
   email: string;
+  Salary: string;
   filed: string;
-  createdAt: string;
-  updatedAt: string;
 }
+
 interface EmployersProps {
   data: EmployersData[];
 }
+
 const EmployersPage = ({ data }: EmployersProps) => {
   const { showAddI, showAdd } = useADDNavbar();
 
-  console.log(data);
   return (
     <>
       {showAdd && (
@@ -32,13 +30,20 @@ const EmployersPage = ({ data }: EmployersProps) => {
           close={showAddI}
         />
       )}
-      <div className="p-10 w-full  min-h-screen">
-        <h1 className="text-2xl  font-bold hover:underline">{"Employers"}</h1>
+      <div className="p-10 w-full min-h-screen">
+        <h1 className="text-2xl font-bold hover:underline">{"Employers"}</h1>
         <CardTable
           thead_one="Name"
-          thead_two="Role"
-          thead_three="Phone/Email"
-          thead_four="Salary"
+          thead_two="Phone Number"
+          thead_three="Salary"
+          thead_four="Email"
+          data={data.map((item) => ({
+            tbody_one: item.name,
+            tbody_two: item.role,
+            tbody_three: item.Salary.toString(),
+            tbody_four: item.email,
+            tbody_five: item.filed,
+          }))}
         />
       </div>
     </>

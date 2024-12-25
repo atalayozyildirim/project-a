@@ -28,6 +28,8 @@ spec:
                 secretKeyRef:
                   name: stripe-secrets
                   key: STRIPE_SECRETS
+            - name: API_URL
+              value: "http://ingress-nginx-controller.ingress-nginx.svc.cluster.local"
           resources:
             limits:
               memory: "512Mi"
@@ -35,7 +37,6 @@ spec:
             requests:
               memory: "256Mi"
               cpu: "250m"
-
 ---
 apiVersion: v1
 kind: Service

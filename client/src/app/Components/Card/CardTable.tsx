@@ -1,3 +1,4 @@
+import React from "react";
 import { useRouter } from "next/router";
 
 interface CardTableProps {
@@ -8,14 +9,14 @@ interface CardTableProps {
   thead_five?: string;
   thead_six?: string;
   thead_eight?: string;
-  data?: {
-    thead_one: string;
-    thead_two: string;
-    thead_three: string;
-    thead_four: string;
-    thead_five?: string;
-    thead_six?: string;
-    thead_eight?: string;
+  data: {
+    tbody_one: string;
+    tbody_two: string;
+    tbody_three: string;
+    tbody_four: string;
+    tbody_five?: string;
+    tbody_six?: string;
+    tbody_eight?: string;
   }[];
   children?: React.ReactNode;
 }
@@ -32,6 +33,13 @@ export default function CardTable({
 }: CardTableProps) {
   const router = useRouter();
 
+  if (!Array.isArray(data)) {
+    console.error("Data prop is not an array:", data);
+    return null;
+  }
+
+  console.log("Data received in CardTable:", data);
+
   return (
     <>
       <div className="w-full ml-1- mt-5 bg-transparent min-h-screen justify-center items-center">
@@ -43,33 +51,30 @@ export default function CardTable({
                 <th className="py-2 px-4 text-left">{thead_two}</th>
                 <th className="py-2 px-4 text-left">{thead_three}</th>
                 <th className="py-2 px-4 text-left">{thead_four}</th>
-                {router.pathname === "/invoice" ? (
+                {router.pathname === "/invoice" && (
                   <>
                     <th className="py-2 px-4 text-left">{thead_five}</th>
                     <th className="py-2 px-4 text-left">{thead_six}</th>
                     <th className="py-2 px-4 text-left">{thead_eight}</th>
                   </>
-                ) : null}
+                )}
               </tr>
             </thead>
-            <tbody className="">
-              {data?.map((item, index) => (
+            <tbody className="atalay">
+              {data.map((item, index) => (
                 <tr key={index} className="hover:bg-[#141517]">
-                  <td className="py-2 px-4">{item.thead_one}</td>
-                  <td className="py-2 px-4">{item.thead_two}</td>
-                  <td className="py-2 px-4">{item.thead_three}</td>
-                  <td className="py-2 px-4">{item.thead_four}</td>
-                  {router.pathname === "/invoice" ? (
+                  <td className="py-2 px-4">{item.tbody_one}</td>
+                  <td className="py-2 px-4">{item.tbody_two}</td>
+                  <td className="py-2 px-4">{item.tbody_three}</td>
+                  <td className="py-2 px-4">{item.tbody_four}</td>
+                  {router.pathname === "/invoice" && (
                     <>
-                      <td className="py-2 px-4">
-                        {thead_five && item.thead_five}
-                      </td>
-                      <td>{thead_six && item.thead_six}</td>
-                      <td>{thead_six && item.thead_eight}</td>
-                      <td></td>
+                      <td className="py-2 px-4">{item.tbody_five}</td>
+                      <td className="py-2 px-4">{item.tbody_six}</td>
+                      <td className="py-2 px-4">{item.tbody_eight}</td>
                     </>
-                  ) : null}
-                  {router.pathname === "/customers" ? (
+                  )}
+                  {router.pathname === "/customers" && (
                     <td className="py-2 px-4">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -82,11 +87,11 @@ export default function CardTable({
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
-                          d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"
+                          d="M6 18L18 6M6 6l12 12"
                         />
                       </svg>
                     </td>
-                  ) : null}
+                  )}
                 </tr>
               ))}
             </tbody>

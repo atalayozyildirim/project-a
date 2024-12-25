@@ -14,6 +14,7 @@ export default function InvoicePages() {
           thead_five="Status"
           thead_six="Amount"
           thead_eight="Due Date"
+          data={[]}
         />
       </div>
     </>
