@@ -24,11 +24,19 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 };
 
+<<<<<<< HEAD
 const Employers = ({
+=======
+const Chart = ({
+>>>>>>> 3e97845f70544a2fae8c5cc480265c9eede2d180
   repo,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { showAddI, showAdd } = useADDNavbar();
 
+<<<<<<< HEAD
+=======
+  console.log(repo);
+>>>>>>> 3e97845f70544a2fae8c5cc480265c9eede2d180
   return (
     <>
       {showAdd && (
