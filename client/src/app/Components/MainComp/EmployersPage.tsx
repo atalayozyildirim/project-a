@@ -1,13 +1,17 @@
-import React, { useEffect } from "react";
+import React from "react";
 import CardTable from "../Card/CardTable";
 import { useADDNavbar } from "@/context/AddNavbarContext";
 import FormInput from "../TextArea/FormInput";
 
 interface EmployersData {
   name: string;
-  role: string;
-  phone_email: string;
+  surname: string;
+  phoneNumber: string;
   salary: string;
+  email: string;
+  filed: string;
+  createdAt: string;
+  updatedAt: string;
 }
 interface EmployersProps {
   data: EmployersData[];
@@ -15,10 +19,7 @@ interface EmployersProps {
 const EmployersPage = ({ data }: EmployersProps) => {
   const { showAddI, showAdd } = useADDNavbar();
 
-  useEffect(() => {
-    console.log("EmployersPage", showAdd);
-    console.log(data);
-  }, [showAdd]);
+  console.log(data);
   return (
     <>
       {showAdd && (

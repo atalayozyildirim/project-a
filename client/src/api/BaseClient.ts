@@ -1,18 +1,19 @@
 import axios from "axios";
-import { AxiosRequestConfig } from "axios";
 
-const baseClient = (req: AxiosRequestConfig) => {
+const baseClient = (context: unknown) => {
   if (typeof window === "undefined") {
     return axios.create({
       baseURL:
-        "http://ingress-nginx.ingress-nginx-controller.svc.cluster.local",
-      headers: req.headers,
-    });
-  } else {
-    return axios.create({
-      baseURL: "/",
+        "http://ingress-nginx-controller.ingress-nginx.svc.cluster.local",
+      headers: {
+        Host: "tickets.dev",
+        Cookie: (context as { req: { headers: { cookie: string } } }).req
+          .headers.cookie,
+      },
     });
   }
+  return axios.create({
+    baseURL: "/",
+  });
 };
-
 export default baseClient;

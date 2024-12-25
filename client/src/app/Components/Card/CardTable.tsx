@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+
 interface CardTableProps {
   thead_one: string;
   thead_two: string;

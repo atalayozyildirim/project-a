@@ -108,4 +108,3 @@ spec:
                 name: email-srv
                 port:
                   number: 3000
-         

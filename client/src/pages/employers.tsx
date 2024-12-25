@@ -24,12 +24,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 };
 
-const Chart = ({
+const Employers = ({
   repo,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { showAddI, showAdd } = useADDNavbar();
 
-  console.log(repo);
   return (
     <>
       {showAdd && (
@@ -51,4 +50,4 @@ const Chart = ({
   );
 };
 
-export default Chart;
+export default Employers;
