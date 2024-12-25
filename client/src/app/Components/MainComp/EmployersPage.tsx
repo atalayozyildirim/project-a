@@ -19,10 +19,6 @@ interface EmployersProps {
 const EmployersPage = ({ data }: EmployersProps) => {
   const { showAddI, showAdd } = useADDNavbar();
 
-<<<<<<< HEAD
-  console.log(data);
-=======
->>>>>>> 7aa18bfd814c5d61a3076fa3d385e53e6262d949
   return (
     <>
       {showAdd && (
