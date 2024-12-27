@@ -35,14 +35,17 @@ export default function CustomerPage({ data }: CustomersProps) {
           thead_two="Email"
           thead_three="Phone"
           thead_four="Company"
-          data={data.data.map((item) => {
-            return {
-              tbody_one: item.name + " " + item.surname,
-              tbody_two: item.email,
-              tbody_three: item.phoneNumber,
-              tbody_four: item.company,
-            };
-          })}
+          data={
+            data.data &&
+            data.data.map((item) => {
+              return {
+                tbody_one: item.name + " " + item.surname,
+                tbody_two: item.email,
+                tbody_three: item.phoneNumber,
+                tbody_four: item.company,
+              };
+            })
+          }
         />
       </div>
     </>

@@ -5,11 +5,9 @@ import PaymentPage from "@/app/Components/MainComp/PaymentPage";
 export default function payment() {
   return (
     <>
-      <>
-        <Layout>
-          <PaymentPage />
-        </Layout>
-      </>
+      <Layout>
+        <PaymentPage />
+      </Layout>
     </>
   );
 }

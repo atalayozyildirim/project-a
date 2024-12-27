@@ -1,7 +1,6 @@
 import React from "react";
 import Image from "next/image";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
 interface Props {
   avatarName: string;
   avatarImage: string;

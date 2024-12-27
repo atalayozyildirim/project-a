@@ -1,9 +1,9 @@
-import { Layout } from "@/app/Components/Layout/Layout";
 import { InferGetServerSidePropsType, GetServerSideProps } from "next";
 import CustomerPage from "@/app/Components/MainComp/CustomerPage";
 import FormInput from "@/app/Components/TextArea/FormInput";
 import { useADDNavbar, AddNavbarContext } from "@/context/AddNavbarContext";
 import baseClient from "@/api/BaseClient";
+import { Layout } from "lucide-react";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
