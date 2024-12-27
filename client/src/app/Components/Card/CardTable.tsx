@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import React from "react";
 import { useRouter } from "next/router";
+import DropDown from "../Button/DropDown";
 
 interface CardTableProps {
   thead_one: string;
@@ -46,6 +47,7 @@ export default function CardTable({
                 <th className="py-2 px-4 text-left">{thead_two}</th>
                 <th className="py-2 px-4 text-left">{thead_three}</th>
                 <th className="py-2 px-4 text-left">{thead_four}</th>
+                <th className="py-2 px-4 text-left"></th>
                 {router.pathname === "/invoice" && (
                   <>
                     <th className="py-2 px-4 text-left">{thead_five}</th>
@@ -70,24 +72,9 @@ export default function CardTable({
                         <td className="py-2 px-4">{item.tbody_eight}</td>
                       </>
                     )}
-                    {router.pathname === "/customers" && (
-                      <td className="py-2 px-4">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={1.5}
-                          stroke="currentColor"
-                          className="size-6 cursor-pointer"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M6 18L18 6M6 6l12 12"
-                          />
-                        </svg>
-                      </td>
-                    )}
+                    <td className="py-2 px-4">
+                      <DropDown label_one="Edit" label_two="Delete" />
+                    </td>
                   </tr>
                 ))}
             </tbody>

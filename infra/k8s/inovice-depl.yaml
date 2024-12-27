@@ -20,6 +20,8 @@ spec:
           env:
             - name: MONGO_URI
               value: mongodb://invoice-mongo-srv:27017/invoice
+            - name : RABBITMQ_URI
+              value: amqp://user:password@rabbitmq-srv:5672
           resources:
             limits:
               memory: "512Mi"

@@ -3,6 +3,9 @@ import amqplib from "amqplib";
 class RabbitMQWrapper {
   private _client?: amqplib.Connection;
   private _channel?: amqplib.Channel;
+  private _url?: string;
+  private _retries?: number;
+  private _delay?: number;
 
   get client() {
     if (!this._client) {
@@ -19,19 +22,24 @@ class RabbitMQWrapper {
   }
 
   async connect(url: string, retries = 5, delay = 5000) {
+    this._url = url;
+    this._retries = retries;
+    this._delay = delay;
     for (let i = 0; i < retries; i++) {
       try {
         console.log("Attempting to connect to RabbitMQ");
         this._client = await amqplib.connect(url);
 
         this._client.on("close", () => {
-          console.error("RabbitMQ connection closed");
-          process.exit(1);
+          console.error(
+            "RabbitMQ connection closed, attempting to reconnect..."
+          );
+          this.reconnect();
         });
 
         this._client.on("error", (err) => {
           console.error("RabbitMQ connection error:", err);
-          process.exit(1);
+          this.reconnect();
         });
 
         this._channel = await this._client.createChannel();
@@ -45,9 +53,15 @@ class RabbitMQWrapper {
         if (i < retries - 1) {
           await new Promise((resolve) => setTimeout(resolve, delay));
         } else {
-          process.exit(1);
+          console.log("Failed to connect to RabbitMQ, exiting...");
         }
       }
+    }
+  }
+
+  private async reconnect() {
+    if (this._url && this._retries && this._delay) {
+      await this.connect(this._url, this._retries, this._delay);
     }
   }
 }

@@ -4,14 +4,12 @@ import FormInput from "../TextArea/FormInput";
 
 interface CustomersProps {
   data: {
-    data: {
-      name: string;
-      surname: string;
-      company: string;
-      phoneNumber: string;
-      email: string;
-    }[];
-  };
+    name: string;
+    surname: string;
+    company: string;
+    phoneNumber: string;
+    email: string;
+  }[];
 }
 
 export default function CustomerPage({ data }: CustomersProps) {
@@ -36,8 +34,8 @@ export default function CustomerPage({ data }: CustomersProps) {
           thead_three="Phone"
           thead_four="Company"
           data={
-            data.data &&
-            data.data.map((item) => {
+            data &&
+            data.map((item) => {
               return {
                 tbody_one: item.name + " " + item.surname,
                 tbody_two: item.email,
