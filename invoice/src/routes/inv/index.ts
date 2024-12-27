@@ -24,6 +24,10 @@ router.post(
       .notEmpty()
       .withMessage("Customer name is required"),
     body("customerEmail").isEmail().withMessage("Invalid email"),
+    body("customerAddress")
+      .isString()
+      .notEmpty()
+      .withMessage("Address is required"),
     body("invoiceDate").isDate().withMessage("Invalid date"),
     body("dueDate").isDate().withMessage("Invalid date"),
     body("products").isArray().notEmpty().withMessage("Products are required"),
@@ -60,7 +64,19 @@ router.post(
     res.json({ message: "Invoice added", data: invoice });
   }
 );
+router.get(
+  "/all/:page",
+  [param("page").isNumeric().withMessage("Not valid page")],
+  (req: Request, res: Response) => {
+    if (!validationResult(req)) throw new Error("Validation failed");
 
+    const data = Invoice.find({})
+      .skip((parseInt(req.params.page) - 1) * 10)
+      .limit(10);
+
+    res.status(200).json(data);
+  }
+);
 router.get(
   "/:id",
   [param("id").isMongoId().withMessage("Not valid id")],

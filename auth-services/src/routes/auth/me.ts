@@ -35,13 +35,17 @@ router.get("/me", async (req: Request, res: Response) => {
                 expiresIn: "1h",
               });
 
-              return res
-                .status(200)
-                .json({ token: acsessToken, userId: dec.id });
+              return res.status(200).json({
+                token: acsessToken,
+                userId: dec.id,
+                userName: dec.name,
+              });
             }
           );
         } else {
-          return res.status(200).json({ token, userId: dec.id });
+          return res
+            .status(200)
+            .json({ token, userId: dec.id, userName: dec.name });
         }
       }
     );

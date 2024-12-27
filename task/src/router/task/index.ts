@@ -72,20 +72,20 @@ router.delete(
     res.send("Task deleted");
   }
 );
-router.get("/list", async (req: Request, res: Response) => {
-  const page = parseInt(req.query.page as string) || 1;
-  const limit = parseInt(req.query.limit as string) || 20;
-  const skip = (page - 1) * limit;
+router.get(
+  "/list/:page",
+  [param("page").isEmpty().withMessage("invalid params")],
+  async (req: Request, res: Response) => {
+    const { page } = req.params;
 
-  const tasks = await Task.find().limit(limit).skip(skip);
-  const total = await Task.countDocuments();
+    if (validationResult(req).isEmpty()) {
+      res.status(400).json({ errors: validationResult(req).array() });
+    }
+    const tasks = await Task.find()
+      .skip(parseInt(page) * 10)
+      .limit(10);
 
-  res.send({
-    tasks,
-    total,
-    page,
-    pages: Math.ceil(total / limit),
-  });
-  res.send(tasks);
-});
+    res.status(200).json(tasks);
+  }
+);
 export default router;

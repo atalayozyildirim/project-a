@@ -4,6 +4,7 @@ interface InvoiceAttr {
   invoiceNumber: string;
   customerName: string;
   customerEmail: string;
+  customerAddress: string;
   invoiceDate: Date;
   dueDate: Date;
   products: [
@@ -20,6 +21,7 @@ interface InvoiceAttr {
 interface InvoiceDoc extends mongoose.Document {
   invoiceNumber: string;
   customerName: string;
+  customerAddress: string;
   customerEmail: string;
   invoiceDate: Date;
   dueDate: Date;
@@ -42,6 +44,7 @@ const invoiceSchema = new mongoose.Schema({
   invoiceNumber: { type: String, required: true },
   customerName: { type: String, required: true },
   customerEmail: { type: String, required: true },
+  customerAddress: { type: String, required: true },
   invoiceDate: { type: Date, required: true },
   dueDate: { type: Date, required: true },
   totalAmount: { type: Number, required: true },

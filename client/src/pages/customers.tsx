@@ -1,9 +1,10 @@
 import { InferGetServerSidePropsType, GetServerSideProps } from "next";
 import CustomerPage from "@/app/Components/MainComp/CustomerPage";
+import "./../style/globals.css";
 import FormInput from "@/app/Components/TextArea/FormInput";
-import { useADDNavbar, AddNavbarContext } from "@/context/AddNavbarContext";
+import { useADDNavbar } from "@/context/AddNavbarContext";
 import baseClient from "@/api/BaseClient";
-import { Layout } from "lucide-react";
+import { Layout } from "@/app/Components/Layout/Layout";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
@@ -41,9 +42,7 @@ const Customer = ({
         />
       )}
       <Layout>
-        <AddNavbarContext>
-          <CustomerPage data={repo} />
-        </AddNavbarContext>
+        <CustomerPage data={repo} />
       </Layout>
     </>
   );

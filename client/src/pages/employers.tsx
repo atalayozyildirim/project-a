@@ -2,7 +2,7 @@ import { Layout } from "@/app/Components/Layout/Layout";
 import { InferGetServerSidePropsType, GetServerSideProps } from "next";
 import "./../style/globals.css";
 import EmployersPage from "@/app/Components/MainComp/EmployersPage";
-import { AddNavbarContext, useADDNavbar } from "@/context/AddNavbarContext";
+import { useADDNavbar } from "@/context/AddNavbarContext";
 import FormInput from "@/app/Components/TextArea/FormInput";
 import baseClient from "@/api/BaseClient";
 
@@ -42,9 +42,7 @@ const Employers = ({
         />
       )}
       <Layout>
-        <AddNavbarContext>
-          <EmployersPage data={repo} />
-        </AddNavbarContext>
+        <EmployersPage data={repo} />
       </Layout>
     </>
   );
