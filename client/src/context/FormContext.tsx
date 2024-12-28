@@ -27,12 +27,12 @@ interface ContextProps {
     data: Employers[] | Customers[] | Task[],
     field: string
   ) => Promise<void>;
-  data: Employers[] | Customers[] | Task[];
+  data: Employers | Customers | Task;
 }
 
 const Context = React.createContext<ContextProps>({
   onSubmitData: async () => {},
-  data: [],
+  data: {} as Employers | Customers | Task,
 });
 
 interface FormContextProps {
@@ -69,7 +69,7 @@ const FormContext: React.FC<FormContextProps> = ({ children }) => {
         await postData("/api/emp/add", data);
         break;
       case "Customers":
-        await postData("/api/customers/add", data);
+        await postData("/api/customer/add", data);
         break;
       default:
         await postData("/api/task/create", data);
@@ -78,10 +78,11 @@ const FormContext: React.FC<FormContextProps> = ({ children }) => {
   };
 
   return (
-    <Context.Provider value={{ onSubmitData, data }}>
+    <Context.Provider value={{ onSubmitData, data: data[0] }}>
       {children}
     </Context.Provider>
   );
 };
 
+export const useFormContext = () => React.useContext(Context);
 export { FormContext, Context };

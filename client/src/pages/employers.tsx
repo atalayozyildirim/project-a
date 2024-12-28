@@ -35,9 +35,11 @@ const Employers = ({
         <FormInput
           fields="Employers"
           textOne="Name"
-          textTwo="Email"
-          textThree="Phone"
-          textFour="Salary"
+          textTwo="Surname"
+          textThree="Role"
+          textFour="Phone Number"
+          textFive="Salary"
+          textSix="Email"
           close={showAddI}
         />
       )}

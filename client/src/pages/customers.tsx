@@ -35,9 +35,10 @@ const Customer = ({
         <FormInput
           fields="Customers"
           textOne="Name"
-          textTwo="Email"
-          textThree="Phone"
-          textFour="Company"
+          textTwo="Surname"
+          textThree="Company"
+          textFour="Email"
+          textFive="Phone Number"
           close={showAddI}
         />
       )}

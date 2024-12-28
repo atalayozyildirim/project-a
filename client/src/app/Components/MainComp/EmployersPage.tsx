@@ -25,9 +25,11 @@ const EmployersPage = ({ data }: EmployersProps) => {
         <FormInput
           fields="Employers"
           textOne="Name"
-          textTwo="Role"
-          textThree="Phone/Email"
-          textFour="Salary"
+          textTwo="Surname"
+          textThree="Role"
+          textFour="Phone Number"
+          textFive="Salary"
+          textSix="Email"
           close={showAddI}
         />
       )}
@@ -39,16 +41,15 @@ const EmployersPage = ({ data }: EmployersProps) => {
           thead_three="Phone/Email"
           thead_four="Salary"
           data={
-            data
-              ? data.data.map((item) => {
-                  return {
-                    tbody_one: item.name + " " + item.surname,
-                    tbody_two: item.role,
-                    tbody_three: `${item.phoneNumber} / ${item.email}`,
-                    tbody_four: item.Salary,
-                  };
-                })
-              : []
+            data &&
+            data.data.map((item) => {
+              return {
+                tbody_one: item.name + " " + item.surname,
+                tbody_two: item.role,
+                tbody_three: `${item.phoneNumber} / ${item.email}`,
+                tbody_four: item.Salary,
+              };
+            })
           }
         />
       </div>
