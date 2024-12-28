@@ -8,6 +8,16 @@ import { rabbit } from "../../event/RabbitmqWrapper.ts";
 import { OrrderCreatedPublisher } from "../../event/publisher/OrderPublisher.ts";
 
 const router = express.Router();
+declare global {
+  namespace Express {
+    interface Request {
+      currentUser?: {
+        id: string;
+        email: string;
+      };
+    }
+  }
+}
 
 router.get(
   "/:id",
@@ -55,8 +65,11 @@ router.post(
     const expiration = new Date();
     expiration.setSeconds(expiration.getSeconds() + 15 * 60);
 
+    if (!req.currentUser) {
+      throw new Error("Not authorized");
+    }
     const order = Order.build({
-      userId: "req.user.id",
+      userId: req.currentUser.id,
       quantity: req.body.quantity,
       product: product,
       expiresAt: expiration,

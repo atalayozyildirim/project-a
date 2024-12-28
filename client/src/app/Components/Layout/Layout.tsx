@@ -3,6 +3,7 @@ import { NavbarTopButton } from "../Button/NavbarTopButton";
 import "@radix-ui/themes/styles.css";
 import { AddNavbarContext } from "@/context/AddNavbarContext";
 import { AuthProvider } from "@/context/AuthContext";
+import { FormContext } from "@/context/FormContext";
 interface LayoutProps {
   children: React.ReactNode;
 }
@@ -12,15 +13,17 @@ export const Layout = ({ children }: LayoutProps) => {
     <>
       <AuthProvider>
         <AddNavbarContext>
-          <NavbarTopButton />
-          <div className="flex flex-row gap-0">
-            <Navbar />
-            <div className="w-11/12 pt-12 relative left-28 h-screen">
-              <div className="w-full flex justify-center items-center">
-                {children}
+          <FormContext>
+            <NavbarTopButton />
+            <div className="flex flex-row gap-0">
+              <Navbar />
+              <div className="w-11/12 pt-12 relative left-28 h-screen">
+                <div className="w-full flex justify-center items-center">
+                  {children}
+                </div>
               </div>
             </div>
-          </div>
+          </FormContext>
         </AddNavbarContext>
       </AuthProvider>
     </>

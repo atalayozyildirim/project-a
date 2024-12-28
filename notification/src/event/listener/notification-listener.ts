@@ -18,11 +18,11 @@ export class NotificationListener extends BaseConsumer<NotifactionCreatedEvent> 
       await emailService.getTransporter().sendMail({
         from: "",
         to: "",
-        subject: "Notification",
-        text: "Seks",
+        subject: "You have logged into your account",
+        text: data.message,
       });
     } catch (err) {
-      console.error(err);
+      console.error("Error processing event");
     }
   }
 }

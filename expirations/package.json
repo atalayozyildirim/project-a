@@ -17,6 +17,6 @@
     "amqplib": "^0.10.5",
     "bull": "^4.16.5",
     "express": "^4.21.2",
-    "microserivce-common": "^1.0.89"
+    "microserivce-common": "^1.0.91"
   }
 }

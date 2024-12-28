@@ -32,7 +32,7 @@
     "express-session": "^1.18.1",
     "express-validator": "^7.2.0",
     "jsonwebtoken": "^9.0.2",
-    "microserivce-common": "^1.0.89",
+    "microserivce-common": "^1.0.91",
     "microservice-common": "^0.0.1-security",
     "mongoose": "^8.9.2",
     "qrcode": "^1.5.4",

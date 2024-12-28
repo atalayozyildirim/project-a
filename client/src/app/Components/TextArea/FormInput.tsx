@@ -4,9 +4,9 @@ interface FormInputProps {
   close: () => void;
   fields: string;
   textOne: string;
-  textTwo: string;
-  textThree: string;
-  textFour: string;
+  textTwo?: string;
+  textThree?: string;
+  textFour?: string;
 }
 
 export default function FormInput({
