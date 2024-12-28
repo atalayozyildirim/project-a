@@ -38,7 +38,7 @@ export abstract class BaseConsumer<T extends Event> {
         if (msg) {
           console.log(`Message received: ${msg.content.toString()}`);
           const parsedMessage = JSON.parse(msg.content.toString());
-          this.onMessage(parsedMessage.data, parsedMessage);
+          this.onMessage(parsedMessage, parsedMessage);
         }
       },
       { noAck: false }
