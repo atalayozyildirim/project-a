@@ -37,33 +37,30 @@ export default function FormInput({
     let submitData;
     switch (fields) {
       case "Employers":
-        submitData = [
-          {
-            name: data.input_one,
-            surname: data.input_two,
-            role: data.input_three,
-            phoneNumber: data.input_four,
-            salary: parseFloat(data.input_five),
-            email: data.input_six,
-            field: "Employers",
-          },
-        ];
+        submitData = {
+          name: data.input_one,
+          surname: data.input_two,
+          role: data.input_three,
+          phoneNumber: data.input_four,
+          Salary: parseFloat(data.input_five),
+          email: data.input_six,
+          filed: "Employers",
+        };
         break;
       case "Customers":
-        submitData = [
-          {
-            company: data.input_one,
-            email: data.input_two,
-            phoneNumber: data.input_three,
-          },
-        ];
+        submitData = {
+          name: data.input_one,
+          surname: data.input_two,
+          company: data.input_three,
+          email: data.input_four,
+          phoneNumber: data.input_five,
+        };
         break;
       case "Task":
-        submitData = [
-          {
-            description: data.input_one,
-          },
-        ];
+        submitData = {
+          description: data.input_one,
+        };
+
         break;
       default:
         console.error("Unknown field type");
@@ -74,8 +71,8 @@ export default function FormInput({
   };
 
   return (
-    <div className="flex fixed top-0 mx-auto z-50 min-w-full justify-center items-center min-h-screen ">
-      <div className="bg-[#171c1e] p-8 rounded-lg shadow-lg w-full max-w-md">
+    <div className="flex fixed top-0 left-0 w-full h-full z-49 justify-center items-center bg-black bg-opacity-50">
+      <div className="bg-[#171c1e] p-8 rounded-lg z-50 relative shadow-lg w-full max-w-md">
         <div onClick={close} className="w-8 h-8 mb-4 cursor-pointer">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -83,7 +80,7 @@ export default function FormInput({
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="white"
-            className="size-8"
+            className="size-6"
             onClick={close}
           >
             <path
@@ -157,26 +154,22 @@ export default function FormInput({
             className="mt-1 block w-full px-3 py-2 border text-white bg-[#141517] border-[#494d55] rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
         </div>
-
-        {textFive && (
-          <div className="w-full max-w-xs mx-auto mt-4">
-            <label
-              htmlFor="input3"
-              className="block text-sm font-medium text-gray-700"
-            >
-              {textFive}
-            </label>
-            <input
-              type="text"
-              id="input5"
-              name="input5"
-              onChange={(e) => setData({ ...data, input_five: e.target.value })}
-              placeholder={textFive}
-              className="mt-1 block w-full px-3 py-2 border text-white bg-[#141517] border-[#494d55] rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            />
-          </div>
-        )}
-
+        <div className="w-full max-w-xs mx-auto mt-4">
+          <label
+            htmlFor="input3"
+            className="block text-sm font-medium text-gray-700"
+          >
+            {textFive}
+          </label>
+          <input
+            type="text"
+            id="input5"
+            name="input5"
+            onChange={(e) => setData({ ...data, input_five: e.target.value })}
+            placeholder={textFive}
+            className="mt-1 block w-full px-3 py-2 border text-white bg-[#141517] border-[#494d55] rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          />
+        </div>
         {textSix && (
           <div className="w-full max-w-xs mx-auto mt-4">
             <label

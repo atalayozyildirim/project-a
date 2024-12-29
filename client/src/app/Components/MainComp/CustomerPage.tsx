@@ -1,6 +1,6 @@
-import { useADDNavbar } from "@/context/AddNavbarContext";
 import CardTable from "../Card/CardTable";
 import FormInput from "../TextArea/FormInput";
+import { useADDNavbar } from "@/context/AddNavbarContext";
 
 interface CustomersProps {
   data: {
@@ -14,15 +14,17 @@ interface CustomersProps {
 
 export default function CustomerPage({ data }: CustomersProps) {
   const { showAddI, showAdd } = useADDNavbar();
+
   return (
     <>
       {showAdd && (
         <FormInput
           fields="Customers"
           textOne="Name"
-          textTwo="Email"
-          textThree="Phone"
-          textFour="Company"
+          textTwo="Surname"
+          textThree="Company"
+          textFour="Email"
+          textFive="Phone Number"
           close={showAddI}
         />
       )}

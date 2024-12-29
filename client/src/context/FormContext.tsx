@@ -13,9 +13,9 @@ interface Employers {
   surname: string;
   role: string;
   phoneNumber: string;
-  salary: number;
+  Salary: number;
   email: string;
-  field: string;
+  filed: string;
 }
 
 interface Task {
@@ -24,7 +24,7 @@ interface Task {
 
 interface ContextProps {
   onSubmitData: (
-    data: Employers[] | Customers[] | Task[],
+    data: Employers | Customers | Task,
     field: string
   ) => Promise<void>;
   data: Employers | Customers | Task;
@@ -40,17 +40,14 @@ interface FormContextProps {
 }
 
 const FormContext: React.FC<FormContextProps> = ({ children }) => {
-  const [data, setData] = React.useState<Employers[] | Customers[] | Task[]>(
-    []
+  const [data, setData] = React.useState<Employers | Customers | Task>(
+    {} as Employers | Customers | Task
   );
 
-  const postData = async (
-    url: string,
-    data: Employers[] | Customers[] | Task[]
-  ) => {
+  const postData = async (url: string, data: Employers | Customers | Task) => {
     try {
-      const res = await axios.post(url, { data });
-      if (res.status === 200) {
+      const res = await axios.post(url, data);
+      if (res.status === 201) {
         setData(data);
       } else {
         console.error("Error posting data");
@@ -61,7 +58,7 @@ const FormContext: React.FC<FormContextProps> = ({ children }) => {
   };
 
   const onSubmitData = async (
-    data: Employers[] | Customers[] | Task[],
+    data: Employers | Customers | Task,
     field: string
   ) => {
     switch (field) {
@@ -78,7 +75,7 @@ const FormContext: React.FC<FormContextProps> = ({ children }) => {
   };
 
   return (
-    <Context.Provider value={{ onSubmitData, data: data[0] }}>
+    <Context.Provider value={{ onSubmitData, data }}>
       {children}
     </Context.Provider>
   );
