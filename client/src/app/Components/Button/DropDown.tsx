@@ -1,3 +1,4 @@
+import baseClient from "@/api/BaseClient";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -6,8 +7,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
+import Router from "next/router";
 interface DropDownProps {
+  data_id?: string;
   label_one: string;
   label_two: string;
   label_three?: string;
@@ -15,11 +17,27 @@ interface DropDownProps {
 }
 
 export default function DropDown({
+  data_id,
   label_one,
   label_two,
   label_three,
   label_four,
 }: DropDownProps) {
+  const pathname = Router.pathname;
+  const deleteClick = async (id: string | undefined) => {
+    switch (pathname) {
+      case "/customers":
+        await baseClient("Atalay").delete(`api/customers/delete/${id}`);
+        break;
+      case "/employers":
+        await baseClient("Atalay").delete(`api/emp/delete/${id}`);
+        break;
+      case "/task":
+        await baseClient("Atalay").delete(`api/task/delete/${id}`);
+        break;
+    }
+  };
+
   return (
     <>
       <DropdownMenu>
@@ -44,7 +62,11 @@ export default function DropDown({
           <DropdownMenuSeparator />
           <DropdownMenuItem>{label_one}</DropdownMenuItem>
           <DropdownMenuItem>{label_two}</DropdownMenuItem>
-          {label_three && <DropdownMenuItem>{label_three}</DropdownMenuItem>}
+          {label_three && (
+            <DropdownMenuItem onClick={() => deleteClick(data_id)}>
+              {label_three}
+            </DropdownMenuItem>
+          )}
           {label_four && <DropdownMenuItem>{label_four}</DropdownMenuItem>}
         </DropdownMenuContent>
       </DropdownMenu>

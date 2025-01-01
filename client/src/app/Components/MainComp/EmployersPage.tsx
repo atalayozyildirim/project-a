@@ -37,6 +37,7 @@ const EmployersPage = ({ data }: EmployersProps) => {
   );
 
   const newData = [...data.data, ...filterData];
+
   return (
     <>
       {showAdd && (
@@ -59,16 +60,17 @@ const EmployersPage = ({ data }: EmployersProps) => {
           thead_three="Phone/Email"
           thead_four="Salary"
           data={
-            data &&
-            newData.map((item) => {
-              return {
-                tbody_id: item._id || "",
-                tbody_one: item.name + " " + item.surname,
-                tbody_two: item.role,
-                tbody_three: `${item.phoneNumber} / ${item.email}`,
-                tbody_four: item.Salary.toString(),
-              };
-            })
+            newData
+              ? newData.map((item) => {
+                  return {
+                    tbody_id: item._id || "",
+                    tbody_one: item.name + " " + item.surname,
+                    tbody_two: item.role,
+                    tbody_three: `${item.phoneNumber} / ${item.email}`,
+                    tbody_four: item.Salary.toString(),
+                  };
+                })
+              : []
           }
         />
       </div>

@@ -2,6 +2,7 @@ import express from "express";
 import type { Request, Response } from "express";
 import { Invoice } from "../../db/InvoiceModel";
 import { Order } from "../../db/OrderModel";
+import { Customer } from "../../db/Customer";
 
 const router = express.Router();
 
@@ -123,11 +124,11 @@ router.get("/orders/daily", async (req: Request, res: Response) => {
 
 router.get("/customer/monthly", async (req: Request, res: Response) => {
   try {
-    const orderData = await Order.aggregate([
+    const orderData = await Customer.aggregate([
       {
         $group: {
           _id: { $month: "$createdDate" },
-          totalCustomers: { $addToSet: "$customerId" },
+          totalCustomers: { $addToSet: "$email" },
         },
       },
       {

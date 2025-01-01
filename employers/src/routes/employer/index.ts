@@ -1,6 +1,6 @@
 import express from "express";
 import type { Request, Response } from "express";
-import { body, validationResult, param } from "express-validator";
+import { body, validationResult, param, query } from "express-validator";
 import { Employer } from "../../db/EmployerModel";
 
 const router = express.Router();
@@ -11,6 +11,25 @@ router.get("/all", async (req: Request, res: Response) => {
   res.status(200).json({ data });
 });
 
+router.get(
+  "/search",
+  [
+    query("s").isString().notEmpty().trim().withMessage("Not valid Query"),
+    query("limit").isInt().optional().withMessage("Not valid Limit"),
+  ],
+  async (req: Request, res: Response) => {
+    if (!validationResult(req)) {
+      throw new Error("Validation failed");
+    }
+    const { s, limit } = req.query;
+
+    const data = await Employer.find({
+      name: { $regex: s, $options: "i" },
+    }).limit(Number(limit) || 10);
+
+    res.status(200).json({ data });
+  }
+);
 router.post(
   "/add",
   [body("name").isString().withMessage("Name is required")],

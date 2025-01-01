@@ -1,12 +1,13 @@
 import express from "express";
 import router from "./routes";
 import { createDb } from "./db/createDb";
-import { checkAuth } from "microserivce-common";
+import { checkAuth, sanitizeMiddleware } from "microserivce-common";
 import cookieParser from "cookie-parser";
 import { rabbit } from "./event/RabbitMQWrapper";
 
 const app = express();
 
+app.use(sanitizeMiddleware);
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));

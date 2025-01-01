@@ -78,7 +78,12 @@ export default function CardTable({
                       </>
                     )}
                     <td className="py-2 px-4">
-                      <DropDown label_one="Edit" label_two="Delete" />
+                      <DropDown
+                        label_one="Edit"
+                        label_two="Send Mail"
+                        label_three="Delete"
+                        data_id={item.tbody_id}
+                      />
                     </td>
                   </tr>
                 ))}

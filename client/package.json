@@ -39,7 +39,8 @@
     "react-dom": "^18.2.0",
     "swr": "^2.2.5",
     "tailwind-merge": "^2.5.5",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "xss-clean": "^0.1.4"
   },
   "devDependencies": {
     "@types/chart.js": "^2.9.41",

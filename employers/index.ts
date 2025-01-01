@@ -1,11 +1,12 @@
 import express from "express";
 import router from "./src/routes";
 import { connectDb } from "./src/db/conenctDb";
-import { checkAuth } from "microserivce-common";
+import { checkAuth, sanitizeMiddleware } from "microserivce-common";
 import cookieParser from "cookie-parser";
 
 const app = express();
 
+app.use(sanitizeMiddleware);
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
