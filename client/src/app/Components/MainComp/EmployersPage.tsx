@@ -4,26 +4,39 @@ import FormInput from "../TextArea/FormInput";
 import CardTable from "../Card/CardTable";
 import { useFormContext } from "@/context/FormContext";
 
-interface EmployersProps {
-  data: {
-    data: {
-      _id?: string;
-      name: string;
-      surname: string;
-      role: string;
-      phoneNumber: string;
-      Salary: string;
-      email: string;
-    }[];
-  };
+interface Employers {
+  _id?: string;
+  name: string;
+  surname: string;
+  role: string;
+  phoneNumber: string;
+  Salary: number;
+  email: string;
+  filed: string;
 }
 
+interface EmployersProps {
+  data: {
+    data: Employers[];
+  };
+}
 const EmployersPage = ({ data }: EmployersProps) => {
   const { showAddI, showAdd } = useADDNavbar();
 
   const { dataForm } = useFormContext();
 
-  console.log(dataForm)
+  const filterData = dataForm.filter(
+    (item): item is Employers =>
+      "name" in item &&
+      "surname" in item &&
+      "role" in item &&
+      "phoneNumber" in item &&
+      "Salary" in item &&
+      "email" in item &&
+      "filed" in item
+  );
+
+  const newData = [...data.data, ...filterData];
   return (
     <>
       {showAdd && (
@@ -47,13 +60,13 @@ const EmployersPage = ({ data }: EmployersProps) => {
           thead_four="Salary"
           data={
             data &&
-            data.data.map((item) => {
+            newData.map((item) => {
               return {
                 tbody_id: item._id || "",
                 tbody_one: item.name + " " + item.surname,
                 tbody_two: item.role,
                 tbody_three: `${item.phoneNumber} / ${item.email}`,
-                tbody_four: item.Salary,
+                tbody_four: item.Salary.toString(),
               };
             })
           }
