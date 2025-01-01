@@ -1,8 +1,9 @@
-"use client";
-import React from "react";
+import React, { useState, createContext, ReactNode, useContext } from "react";
 import axios from "axios";
 
 interface Customers {
+  name: string;
+  surname: string;
   company: string;
   email: string;
   phoneNumber: string;
@@ -27,28 +28,32 @@ interface ContextProps {
     data: Employers | Customers | Task,
     field: string
   ) => Promise<void>;
-  data: Employers | Customers | Task;
+  dataForm: (Employers | Customers | Task)[];
+  setDataForm: React.Dispatch<
+    React.SetStateAction<(Employers | Customers | Task)[]>
+  >;
 }
 
-const Context = React.createContext<ContextProps>({
+const Context = createContext<ContextProps>({
   onSubmitData: async () => {},
-  data: {} as Employers | Customers | Task,
+  dataForm: [],
+  setDataForm: () => {},
 });
 
 interface FormContextProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 const FormContext: React.FC<FormContextProps> = ({ children }) => {
-  const [data, setData] = React.useState<Employers | Customers | Task>(
-    {} as Employers | Customers | Task
+  const [dataForm, setDataForm] = useState<(Employers | Customers | Task)[]>(
+    []
   );
 
   const postData = async (url: string, data: Employers | Customers | Task) => {
     try {
       const res = await axios.post(url, data);
       if (res.status === 201) {
-        setData(data);
+        setDataForm((prev) => [...prev, data]);
       } else {
         console.error("Error posting data");
       }
@@ -75,11 +80,11 @@ const FormContext: React.FC<FormContextProps> = ({ children }) => {
   };
 
   return (
-    <Context.Provider value={{ onSubmitData, data }}>
+    <Context.Provider value={{ onSubmitData, dataForm, setDataForm }}>
       {children}
     </Context.Provider>
   );
 };
 
-export const useFormContext = () => React.useContext(Context);
+export const useFormContext = () => useContext(Context);
 export { FormContext, Context };

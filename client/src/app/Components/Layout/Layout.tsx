@@ -12,8 +12,8 @@ export const Layout = ({ children }: LayoutProps) => {
   return (
     <>
       <AuthProvider>
-        <AddNavbarContext>
-          <FormContext>
+        <FormContext>
+          <AddNavbarContext>
             <NavbarTopButton />
             <div className="flex flex-row gap-0">
               <Navbar />
@@ -23,8 +23,8 @@ export const Layout = ({ children }: LayoutProps) => {
                 </div>
               </div>
             </div>
-          </FormContext>
-        </AddNavbarContext>
+          </AddNavbarContext>
+        </FormContext>
       </AuthProvider>
     </>
   );

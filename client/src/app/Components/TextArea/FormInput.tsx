@@ -35,6 +35,14 @@ export default function FormInput({
 
   const handleSubmit = () => {
     let submitData;
+    if (
+      data.input_one === "" ||
+      data.input_two === "" ||
+      data.input_three === "" ||
+      data.input_four === "" ||
+      data.input_five === ""
+    )
+      return null;
     switch (fields) {
       case "Employers":
         submitData = {
@@ -67,12 +75,13 @@ export default function FormInput({
         return;
     }
     onSubmitData(submitData, fields);
+    close();
     setClicked(!clicked);
   };
 
   return (
     <div className="flex fixed top-0 left-0 w-full h-full z-49 justify-center items-center bg-black bg-opacity-50">
-      <div className="bg-[#171c1e] p-8 rounded-lg z-50 relative shadow-lg w-full max-w-md">
+      <div className="bg-[#171c1e] p-8 rounded-lg z-50 mt-4 relative shadow-lg w-full max-w-md">
         <div onClick={close} className="w-8 h-8 mb-4 cursor-pointer">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -193,8 +202,9 @@ export default function FormInput({
             type="button"
             onClick={handleSubmit}
             className="w-full px-4 py-2 bg-blue-500  text-white rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            {...(clicked ? { disabled: true } : {})}
           >
-            Submit
+            {clicked ? "Submitted" : "Submit"}
           </button>
         </div>
       </div>

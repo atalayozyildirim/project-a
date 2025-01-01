@@ -9,6 +9,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { useChartContext } from "@/context/ChartContext";
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 ChartJS.register(
@@ -25,10 +26,23 @@ const Charts = () => {
   const [chartData, setChartData] = useState<number[]>([]);
 
   const data = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    labels: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ],
     datasets: [
       {
-        label: value || "chart",
+        label: value || "Chart",
         data: chartData,
         backgroundColor: "rgba(75, 192, 192, 0.2)",
         borderColor: "rgba(75, 192, 192, 1)",
@@ -44,15 +58,28 @@ const Charts = () => {
       },
       title: {
         display: true,
-        text: value || "chart",
+        text: value || "Chart",
       },
     },
   };
+  const chartDataFetch = async () => {
+    try {
+      const res = await axios.get(
+        `/api/chart/${value == null ? "sales" : value}`
+      );
+
+      res.data.map((item: { value: number }) => {
+        console.log(item);
+        setChartData([item.value]);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    const a = [65, 59, 80, 81, 56, 55, 40];
-    setChartData(a);
-  }, []);
+    chartDataFetch();
+  }, [value]);
 
   return (
     <div className="min-h-screen w-full p-10 bg-transparent text-white">

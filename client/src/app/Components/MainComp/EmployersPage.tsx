@@ -2,10 +2,12 @@ import React from "react";
 import { useADDNavbar } from "@/context/AddNavbarContext";
 import FormInput from "../TextArea/FormInput";
 import CardTable from "../Card/CardTable";
+import { useFormContext } from "@/context/FormContext";
 
 interface EmployersProps {
   data: {
     data: {
+      _id?: string;
       name: string;
       surname: string;
       role: string;
@@ -19,6 +21,9 @@ interface EmployersProps {
 const EmployersPage = ({ data }: EmployersProps) => {
   const { showAddI, showAdd } = useADDNavbar();
 
+  const { dataForm } = useFormContext();
+
+  console.log(dataForm)
   return (
     <>
       {showAdd && (
@@ -44,6 +49,7 @@ const EmployersPage = ({ data }: EmployersProps) => {
             data &&
             data.data.map((item) => {
               return {
+                tbody_id: item._id || "",
                 tbody_one: item.name + " " + item.surname,
                 tbody_two: item.role,
                 tbody_three: `${item.phoneNumber} / ${item.email}`,

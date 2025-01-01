@@ -22,16 +22,16 @@ export function SelectButton() {
           <SelectItem className="w-[195px]" value="sales">
             Sales
           </SelectItem>
-          <SelectItem className="w-[195px]" value="Revenue">
+          <SelectItem className="w-[195px]" value="revenue/drop">
             Revenue Drop
           </SelectItem>
-          <SelectItem className="w-[195x]" value="Lead">
+          <SelectItem className="w-[195x]" value="orders">
             Orders
           </SelectItem>
-          <SelectItem className="w-[195px]" value="Conversion">
+          <SelectItem className="w-[195px]" value="orders/daily">
             Orders Daily
           </SelectItem>
-          <SelectItem className="w-[195px]" value="Customers">
+          <SelectItem className="w-[195px]" value="customer/monthly">
             Customer Monthly
           </SelectItem>
         </SelectGroup>

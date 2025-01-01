@@ -21,7 +21,7 @@ router.get("/sales", async (req: Request, res: Response) => {
     const formmatedData = salesData.map((data) => {
       return {
         month: data._id,
-        totalAmount: data.totalAmount,
+        value: data.totalAmount,
       };
     });
     res.status(200).json(formmatedData);
@@ -55,7 +55,7 @@ router.get("/revenue/drop", async (req: Request, res: Response) => {
 
       return {
         month: data._id,
-        totalRevenue: data.totalRevenue,
+        value: data.totalRevenue,
         revenueDrop,
         revenueDropPercentage,
       };
@@ -84,7 +84,7 @@ router.get("/orders", async (req: Request, res: Response) => {
     const formmatedData = orderData.map((data) => {
       return {
         month: data._id,
-        totalOrders: data.totalOrders,
+        value: data.totalOrders,
       };
     });
     res.status(200).json(formmatedData);
@@ -110,7 +110,7 @@ router.get("/orders/daily", async (req: Request, res: Response) => {
     const formattedData = orderData.map((data) => {
       return {
         day: data._id,
-        totalOrders: data.totalOrders,
+        value: data.totalOrders,
       };
     });
 
@@ -144,7 +144,7 @@ router.get("/customer/monthly", async (req: Request, res: Response) => {
     const formattedData = orderData.map((data) => {
       return {
         month: data._id,
-        totalCustomers: data.totalCustomers,
+        value: data.totalCustomers,
       };
     });
 

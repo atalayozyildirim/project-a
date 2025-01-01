@@ -6,7 +6,7 @@ import { Layout } from "@/app/Components/Layout/Layout";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
-    const { data } = await baseClient(context).get("/api/customer/all/1");
+    const { data } = await baseClient(context).get("/api/customer/all/3");
 
     return {
       props: {
@@ -26,11 +26,9 @@ const Customer = ({
   repo,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
-    <>
-      <Layout>
-        <CustomerPage data={repo} />
-      </Layout>
-    </>
+    <Layout>
+      <CustomerPage data={repo} />
+    </Layout>
   );
 };
 

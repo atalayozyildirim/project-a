@@ -1,20 +1,38 @@
+import React from "react";
+import { useFormContext } from "@/context/FormContext";
 import CardTable from "../Card/CardTable";
 import FormInput from "../TextArea/FormInput";
 import { useADDNavbar } from "@/context/AddNavbarContext";
 
+interface Customer {
+  _id?: string;
+  name: string;
+  surname: string;
+  company: string;
+  phoneNumber: string;
+  email: string;
+}
+
 interface CustomersProps {
-  data: {
-    name: string;
-    surname: string;
-    company: string;
-    phoneNumber: string;
-    email: string;
-  }[];
+  data: Customer[];
 }
 
 export default function CustomerPage({ data }: CustomersProps) {
   const { showAddI, showAdd } = useADDNavbar();
+  const { dataForm } = useFormContext();
 
+  const filteredDataForm = dataForm.filter(
+    (item): item is Customer =>
+      "name" in item &&
+      "surname" in item &&
+      "company" in item &&
+      "phoneNumber" in item &&
+      "email" in item
+  );
+
+  const transformData = [...data, ...filteredDataForm];
+
+  console.log(transformData);
   return (
     <>
       {showAdd && (
@@ -35,17 +53,15 @@ export default function CustomerPage({ data }: CustomersProps) {
           thead_two="Email"
           thead_three="Phone"
           thead_four="Company"
-          data={
-            data &&
-            data.map((item) => {
-              return {
-                tbody_one: item.name + " " + item.surname,
-                tbody_two: item.email,
-                tbody_three: item.phoneNumber,
-                tbody_four: item.company,
-              };
-            })
-          }
+          data={transformData.map((item) => {
+            return {
+              tbody_id: item._id || "",
+              tbody_one: item.name + " " + item.surname,
+              tbody_two: item.email,
+              tbody_three: item.phoneNumber,
+              tbody_four: item.company,
+            };
+          })}
         />
       </div>
     </>

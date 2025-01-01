@@ -9,6 +9,7 @@ interface Products {
 interface InvoicePagesProps {
   data: {
     data: {
+      _id: string;
       invoiceNumber: string;
       customerName: string;
       customerEmail: string;
@@ -38,6 +39,7 @@ export default function InvoicePages({ data }: InvoicePagesProps) {
             data.data &&
             data.data.map((item) => {
               return {
+                tbody_id: item._id,
                 tbody_one: item.invoiceNumber,
                 tbody_two: item.customerName,
                 tbody_three: item.invoiceDate,

@@ -12,6 +12,7 @@ interface CardTableProps {
   thead_six?: string;
   thead_eight?: string;
   data: Array<{
+    tbody_id: string;
     tbody_one: string;
     tbody_two: string;
     tbody_three: string;
@@ -60,7 +61,11 @@ export default function CardTable({
             <tbody className="atalay">
               {data &&
                 data.map((item, index) => (
-                  <tr key={index} className="hover:bg-[#141517]">
+                  <tr
+                    key={index}
+                    className="hover:bg-[#141517]"
+                    data-id={item.tbody_id}
+                  >
                     <td className="py-2 px-4">{item.tbody_one}</td>
                     <td className="py-2 px-4">{item.tbody_two}</td>
                     <td className="py-2 px-4">{item.tbody_three}</td>
