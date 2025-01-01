@@ -14,3 +14,4 @@ export * from "./src/event/expriations-event";
 export * from "./src/event/product-updateEvent";
 export * from "./src/event/invoice-created-event";
 export * from "./src/event/customer-created-event";
+export * from "./src/middleware/sanitizeMiddleware";
