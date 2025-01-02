@@ -11,6 +11,7 @@ interface Item {
   total: number;
 }
 export default function InvoiceForm({ close }: InvoiceFormProps) {
+  const [data, setData] = useState({});
   const [currentDate, setCurrentDate] = useState<string>("");
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [kdv, setKdv] = useState<number>(18);
@@ -85,6 +86,9 @@ export default function InvoiceForm({ close }: InvoiceFormProps) {
                 <input
                   type="text"
                   placeholder="Customer"
+                  onChange={(e) =>
+                    setData({ ...data, customer: e.target.value })
+                  }
                   className="bg-[#141517] w-full max-w-md p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
@@ -94,6 +98,7 @@ export default function InvoiceForm({ close }: InvoiceFormProps) {
                   type="number"
                   max={"11"}
                   placeholder="tc"
+                  onChange={(e) => setData({ ...data, tc: e.target.value })}
                   className="bg-[#141517] w-full max-w-md p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
@@ -103,6 +108,7 @@ export default function InvoiceForm({ close }: InvoiceFormProps) {
                   type="number"
                   placeholder="Number"
                   disabled={true}
+                  onChange={(e) => setData({ ...data, number: e.target.value })}
                   className="bg-[#141517] w-full max-w-md p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
@@ -111,6 +117,9 @@ export default function InvoiceForm({ close }: InvoiceFormProps) {
                 <input
                   type="text"
                   placeholder="Address"
+                  onChange={(e) =>
+                    setData({ ...data, address: e.target.value })
+                  }
                   className="bg-[#141517] w-full max-w-md p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
@@ -119,6 +128,7 @@ export default function InvoiceForm({ close }: InvoiceFormProps) {
                 <input
                   type="text"
                   placeholder="status"
+                  onChange={(e) => setData({ ...data, status: e.target.value })}
                   className="bg-[#141517] w-full max-w-md p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>

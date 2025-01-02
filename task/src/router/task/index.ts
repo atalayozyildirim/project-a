@@ -13,15 +13,22 @@ enum TaskStatus {
 
 router.post(
   "/create",
-  [body("description").isString().notEmpty()],
+  [
+    body("description").isString().notEmpty().withMessage("invalid params"),
+    body("assignedTo").isString().notEmpty().withMessage("invalid params"),
+    body("dueDate").isString().notEmpty().withMessage("invalid params"),
+    body("priority").isString().notEmpty().withMessage("invalid params"),
+    body("status").isString().notEmpty().withMessage("invalid params"),
+  ],
   async (req: Request, res: Response) => {
-    const { description } = req.body;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.status(400).json({ errors: errors.array() });
+      throw new Error("Not valid body !");
     }
-    const task = Task.build({ description, status: "pending" });
+    const task = Task.build(req.body);
+
     await task.save();
+
     res.status(201).send(task);
   }
 );
@@ -34,7 +41,7 @@ router.put(
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.status(400).json({ errors: errors.array() });
+      throw new Error("Not valid params !");
     }
     const task = await Task.findOne({ taskId });
 
@@ -61,7 +68,7 @@ router.delete(
   async (req: Request, res: Response) => {
     const { taskId } = req.params;
     if (validationResult(req).isEmpty()) {
-      res.status(400).json({ errors: validationResult(req).array() });
+      throw new Error("Not valid params !");
     }
     const task = await Task.findOne({ taskId });
     if (!task) {
@@ -79,7 +86,7 @@ router.get(
     const { page } = req.params;
 
     if (validationResult(req).isEmpty()) {
-      res.status(400).json({ errors: validationResult(req).array() });
+      throw new Error("Not valid params !");
     }
     const tasks = await Task.find()
       .skip(parseInt(page) * 10)

@@ -8,5 +8,12 @@ export interface InvoiceCreatedEvent {
     status: string;
     createdDate: Date;
     totalAmount: number;
+    customerName: string;
+    customerEmail: string;
+    customerAddress: string;
+    invoiceDate: Date;
+    dueDate: Date;
+    products: Array<any>;
+    invoiceNumber: string;
   };
 }

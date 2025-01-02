@@ -2,6 +2,9 @@ import mongoose from "mongoose";
 
 interface TaskAttr {
   description: string;
+  assignedTo: string;
+  dueDate: Date;
+  priority: string;
   status: string;
 }
 
@@ -11,6 +14,9 @@ interface TaskModel extends mongoose.Model<TaskDoc> {
 
 interface TaskDoc extends mongoose.Document {
   description: string;
+  assignedTo: string;
+  dueDate: Date;
+  priority: string;
   status: string;
 }
 
@@ -24,6 +30,18 @@ const taskSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  assignedTo: {
+    type: String,
+    required: true,
+  },
+  dueDate: {
+    type: Date,
+    required: true,
+  },
+  priority: {
+    type: String,
+    required: true,
+  },
   status: {
     type: String,
     required: true,
@@ -31,7 +49,7 @@ const taskSchema = new mongoose.Schema({
 });
 taskSchema.pre("save", function (next) {
   if (!this.taskId) {
-    this.taskId = new mongoose.Types.ObjectId().toString();
+    this.taskId = "TASK-" + Math.floor(Math.random() * 1000000);
   }
   next();
 });

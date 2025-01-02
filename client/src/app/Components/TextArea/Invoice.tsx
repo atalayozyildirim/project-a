@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-
+import baseClient from "@/api/BaseClient";
 interface Item {
   description: string;
   quantity: number;
@@ -15,6 +15,7 @@ interface InvoiceProps {
 }
 
 export default function Invoice(props: InvoiceProps) {
+  const [name, setName] = useState("");
   const [currentDate, setCurrentDate] = useState<string>("");
   const [customerAddress, setCustomerAddress] =
     useState<string>("Customer Address");
@@ -76,6 +77,24 @@ export default function Invoice(props: InvoiceProps) {
     });
   };
 
+  const handleClick = async () => {
+    try {
+      const response = await baseClient("atalay").post("api/invoice/add", {
+        customerName: name,
+        customerEmail: "",
+        customerAddress: customerAddress,
+        invoiceDate: new Date(),
+        dueDate: new Date(new Date().setDate(new Date().getDate() + 1)),
+        products: items,
+        totalAmount: totalAmount,
+        status: "Pending",
+      });
+      console.log(response);
+      if (response.status === 201) props.closeInvoice();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <div
@@ -96,7 +115,11 @@ export default function Invoice(props: InvoiceProps) {
           <div className="from-address">
             <h2>From</h2>
             <p>
-              <input type="text" placeholder="Name" />
+              <input
+                type="text"
+                placeholder="Name"
+                onChange={(e) => setName(e.target.value)}
+              />
             </p>
             <p>
               <textarea
@@ -188,6 +211,10 @@ export default function Invoice(props: InvoiceProps) {
         </table>
         <button className="add-item-button" onClick={addItem}>
           Add Item
+        </button>
+        <button className="add-item-button" onClick={handleClick}>
+          {" "}
+          Submit{" "}
         </button>
         <div className="invoice-totals">
           <div className="totals-row">

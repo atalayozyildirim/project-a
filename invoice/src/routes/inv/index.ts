@@ -1,24 +1,16 @@
 import express from "express";
 import type { Request, Response } from "express";
-import { body, param, validationResult } from "express-validator";
-import { Invoice } from "../../db/invocieModel";
+import { body, validationResult, param } from "express-validator";
+import Invoice from "../../db/invocieModel";
 import { InvoicePublisher } from "../../event/publiher/InvoicePublisher";
 import { rabbit } from "../../event/RabbitmqWrapper";
 import { Subject } from "microserivce-common";
 
 const router = express.Router();
 
-router.get("/", (req: Request, res: Response) => {
-  res.json({ message: "Invoice service is up and running" });
-});
-
 router.post(
   "/add",
   [
-    body("inoviceNumber")
-      .isString()
-      .notEmpty()
-      .withMessage("Invoice number is required"),
     body("customerName")
       .isString()
       .notEmpty()
@@ -38,66 +30,70 @@ router.post(
     body("status").isString().notEmpty().withMessage("Status is required"),
   ],
   async (req: Request, res: Response) => {
-    if (!validationResult(req)) {
-      throw new Error("Validation failed");
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      throw new Error("Invalid  data");
     }
 
-    const invoiceExists = Invoice.findOne({
+    const invoiceExists = await Invoice.findOne({
       invoiceNumber: req.body.invoiceNumber,
     });
-    if (!invoiceExists) {
-      throw new Error("Invoice already exists");
+    if (invoiceExists) {
+      throw new Error("Invoice number already exists");
     }
 
-    const invoice = Invoice.build(req.body);
+    const invoice = new Invoice(req.body);
 
-    invoice.save();
+    await invoice.save();
 
     await new InvoicePublisher(rabbit.client!).publish(Subject.InvoiceCreated, {
       id: invoice.id,
-      createdDate: invoice.invoiceDate,
+      customerName: invoice.customerName,
+      customerEmail: invoice.customerEmail,
+      customerAddress: invoice.customerAddress,
+      invoiceDate: invoice.invoiceDate,
+      dueDate: invoice.dueDate,
+      products: invoice.products,
       totalAmount: invoice.totalAmount,
-      version: 3,
       status: invoice.status,
+      invoiceNumber: invoice.invoiceNumber,
+      version: 0,
+      createdDate: new Date(),
     });
 
-    res.json({ message: "Invoice added", data: invoice });
-  }
-);
-router.get(
-  "/all/:page",
-  [param("page").isNumeric().withMessage("Not valid page")],
-  (req: Request, res: Response) => {
-    if (!validationResult(req)) throw new Error("Validation failed");
-
-    const data = Invoice.find({})
-      .skip((parseInt(req.params.page) - 1) * 10)
-      .limit(10);
-
-    res.status(200).json(data);
+    res.status(201).json(invoice);
   }
 );
 router.get(
   "/:id",
-  [param("id").isMongoId().withMessage("Not valid id")],
-  (req: Request, res: Response) => {
-    if (!validationResult(req)) {
-      throw new Error("Validation failed");
-    }
-
-    const invoice = Invoice.findById(req.params.id);
-
+  [param("id").isMongoId().notEmpty().withMessage("Not valid params")],
+  async (req: Request, res: Response) => {
+    const invoice = await Invoice.findById(req.params.id);
     if (!invoice) {
       throw new Error("Invoice not found");
     }
-
-    res.json({ message: "Succsess", data: invoice });
+    res.status(200).json(invoice);
   }
 );
 
-router.get("/all", (req: Request, res: Response) => {
-  const invoices = Invoice.find({});
-  res.json({ invoices });
-});
+router.get(
+  "/all/:page",
+  [
+    param("page")
+      .isString()
+      .notEmpty()
+      .default(1)
+      .withMessage("Not valid page params"),
+  ],
+  async (req: Request, res: Response) => {
+    if (!validationResult(req).isEmpty()) {
+      throw new Error("Invalid page number");
+    }
 
+    const invoices = await Invoice.find({})
+      .skip((parseInt(req.params.page) - 1) * 10)
+      .limit(10);
+    res.status(200).json(invoices);
+  }
+);
 export default router;

@@ -39,7 +39,7 @@ export default function AddInput(Props: ShowProps) {
     <div className="relative">
       <input
         type="text"
-        placeholder="Command !help"
+        placeholder="Search"
         onChange={(e) => setPrompt(e.target.value)}
         onKeyDown={handlePrompt}
         className="top-0 left-1/2 ml-5 text-white fixed z-[50] transform -translate-x-1/2 w-1/2 outline-none  bg-[#141517] shadow-lg h-14 p-1 mt-2 rounded-3xl flex justify-between items-center pr-10"

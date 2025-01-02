@@ -27,7 +27,7 @@ export default function DropDown({
   const deleteClick = async (id: string | undefined) => {
     switch (pathname) {
       case "/customers":
-        await baseClient("Atalay").delete(`api/customers/delete/${id}`);
+        await baseClient("Atalay").delete(`api/customer/delete/${id}`);
         break;
       case "/employers":
         await baseClient("Atalay").delete(`api/emp/delete/${id}`);
