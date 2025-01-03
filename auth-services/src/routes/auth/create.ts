@@ -2,6 +2,10 @@ import express from "express";
 import type { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 import { Auth } from "../../model/AuthModel";
+import { AuthPublisherCreated } from "../../event/publisher.ts/auth-publisher-created";
+import { Subject } from "microserivce-common";
+import { rabbit } from "../../event/rabbitmqWrapper";
+import { UserPublisherCreated } from "../../event/publisher.ts/user-publisher-created";
 
 const router = express.Router();
 
@@ -23,7 +27,16 @@ router.post("/register", [
 
     const user = Auth.build({ email, password, name });
 
+    await new UserPublisherCreated(rabbit.client).publish(Subject.UserCreated, {
+      email: user.email,
+      name: user.name,
+      tasks: [],
+      id: user.id,
+      role: "",
+    });
+
     await user.save();
+
     res.status(201).json({ message: "User created", redirect: "/login" });
   },
 ]);

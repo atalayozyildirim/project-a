@@ -1,6 +1,6 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { Layout } from "@/app/Components/Layout/Layout";
-import "./../style/globals.css";
+import "./../../style/globals.css";
 import TaskPage from "@/app/Components/MainComp/TaskPage";
 import baseClient from "@/api/BaseClient";
 

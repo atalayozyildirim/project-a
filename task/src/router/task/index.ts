@@ -14,11 +14,20 @@ enum TaskStatus {
 router.post(
   "/create",
   [
-    body("description").isString().notEmpty().withMessage("invalid params"),
-    body("assignedTo").isString().notEmpty().withMessage("invalid params"),
-    body("dueDate").isString().notEmpty().withMessage("invalid params"),
-    body("priority").isString().notEmpty().withMessage("invalid params"),
-    body("status").isString().notEmpty().withMessage("invalid params"),
+    body("description")
+      .isString()
+      .notEmpty()
+      .withMessage("invalid params description"),
+    body("assignedTo")
+      .isString()
+      .notEmpty()
+      .withMessage("invalid params assignedTo"),
+    body("dueDate").isString().notEmpty().withMessage("invalid params dueData"),
+    body("priority")
+      .isString()
+      .notEmpty()
+      .withMessage("invalid params priority"),
+    body("status").isString().notEmpty().withMessage("invalid params status"),
   ],
   async (req: Request, res: Response) => {
     const errors = validationResult(req);
@@ -32,7 +41,29 @@ router.post(
     res.status(201).send(task);
   }
 );
-// ?
+router.get(
+  "/detail/:taskId",
+  [
+    param("taskId")
+      .isString()
+      .notEmpty()
+      .withMessage("budnan buyuk bi yalan yok"),
+  ],
+  async (req: Request, res: Response) => {
+    if (!validationResult(req)) {
+      throw new Error("Not valid params !");
+    }
+    const { taskId } = req.params;
+
+    const task = await Task.findOne({ taskId });
+
+    if (!task) {
+      throw new Error("Task not found");
+    }
+
+    res.status(200).json(task);
+  }
+);
 router.put(
   "/update/status/:taskId",
   [param("taskId").isString().notEmpty()],
