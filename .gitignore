@@ -1,5 +1,6 @@
 .DS_Store
 node_modules
+skaffold.exe
 .env
 .envrc
 .eslintcache
