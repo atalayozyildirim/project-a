@@ -23,7 +23,6 @@ interface TaskDoc extends mongoose.Document {
 const taskSchema = new mongoose.Schema({
   taskId: {
     type: String,
-    required: true,
     unique: true,
   },
   description: {
@@ -31,7 +30,8 @@ const taskSchema = new mongoose.Schema({
     required: true,
   },
   assignedTo: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
     required: true,
   },
   dueDate: {
