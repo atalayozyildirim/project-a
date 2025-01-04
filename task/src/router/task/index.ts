@@ -2,6 +2,7 @@ import express from "express";
 import type { Request, Response } from "express";
 import { body, param, validationResult } from "express-validator";
 import { Task } from "../../model/TaskModel";
+import { User } from "../../model/UserModel";
 
 const router = express.Router();
 
@@ -35,10 +36,11 @@ router.post(
       throw new Error("Not valid body !");
     }
     const task = Task.build(req.body);
+    task.taskId = Math.random().toString(36).substring(7);
 
     await task.save();
 
-    res.status(201).send(task);
+    res.status(201).json(task);
   }
 );
 router.get(
@@ -62,6 +64,20 @@ router.get(
     }
 
     res.status(200).json(task);
+  }
+);
+router.get(
+  "/assigned/:userId",
+  [param("userId").isString().notEmpty().withMessage("Not valid")],
+  async (req: Request, res: Response) => {
+    if (!validationResult(req)) {
+      throw new Error("Not valid params !");
+    }
+    const { userId } = req.params;
+
+    const user = await User.find({ userId });
+
+    res.status(200).json(user);
   }
 );
 router.put(

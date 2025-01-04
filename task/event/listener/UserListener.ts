@@ -20,7 +20,9 @@ export class UserListener extends BaseConsumer<UserCreatedEvent> {
       name: data.name,
       email: data.email,
       task: [],
-      role: "",
+      role: "user",
     });
+
+    await user.save();
   }
 }
