@@ -24,6 +24,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const Tasks = ({
   repo,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  console.log(repo);
   return (
     <Layout>
       <TaskPage

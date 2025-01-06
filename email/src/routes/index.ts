@@ -20,6 +20,22 @@ interface EmailConfig {
 }
 
 router.post(
+  "/get/config",
+  [body("userId").notEmpty().isString().withMessage("userId is required")],
+  async (req: Request, res: Response) => {
+    if (!validationResult(req)) {
+      res.status(400).json({ errors: validationResult(req).array() });
+    }
+    const find = await Email.findOne({ userId: req.body.userId });
+
+    if (!find) {
+      throw new Error("Email configuration not found");
+    }
+
+    res.status(200).json(find);
+  }
+);
+router.post(
   "/config",
   [
     body("host").isString().notEmpty(),
@@ -94,7 +110,7 @@ router.post(
   }
 );
 
-router.get(
+router.post(
   "/inbox",
   [
     body("userId").isMongoId().notEmpty(),

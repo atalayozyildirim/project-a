@@ -66,6 +66,13 @@ router.get(
     res.status(200).json(task);
   }
 );
+
+router.get("/user/list", async (req: Request, res: Response) => {
+  const users = await User.find();
+
+  res.status(200).json(users);
+});
+
 router.get(
   "/assigned/:userId",
   [param("userId").isString().notEmpty().withMessage("Not valid")],
@@ -128,11 +135,12 @@ router.delete(
 );
 router.get(
   "/list/:page",
-  [param("page").isEmpty().withMessage("invalid params")],
+  [param("page").notEmpty().withMessage("invalid params")],
   async (req: Request, res: Response) => {
     const { page } = req.params;
 
-    if (validationResult(req).isEmpty()) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
       throw new Error("Not valid params !");
     }
     const tasks = await Task.find()

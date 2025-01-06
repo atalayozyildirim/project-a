@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 interface TaskAttr {
+  taskUd?: string;
   description: string;
   assignedTo: string;
   dueDate: Date;
@@ -13,6 +14,7 @@ interface TaskModel extends mongoose.Model<TaskDoc> {
 }
 
 interface TaskDoc extends mongoose.Document {
+  taskId: string;
   description: string;
   assignedTo: string;
   dueDate: Date;

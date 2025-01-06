@@ -18,19 +18,30 @@ interface Employers {
   email: string;
   filed: string;
 }
-
 interface Task {
+  taskId: string;
   description: string;
+  assignedTo: string;
+  dueDate: Date;
+  priority: string;
+  staus: string;
 }
-
+interface Emails {
+  userId: string;
+  host: string;
+  port: number;
+  user: string;
+  password: string;
+  tls: boolean;
+}
 interface ContextProps {
   onSubmitData: (
-    data: Employers | Customers | Task,
+    data: Employers | Customers | Task | Emails,
     field: string
   ) => Promise<void>;
-  dataForm: (Employers | Customers | Task)[];
+  dataForm: (Employers | Customers | Task | Emails)[];
   setDataForm: React.Dispatch<
-    React.SetStateAction<(Employers | Customers | Task)[]>
+    React.SetStateAction<(Employers | Customers | Task | Emails)[]>
   >;
 }
 
@@ -45,11 +56,14 @@ interface FormContextProps {
 }
 
 const FormContext: React.FC<FormContextProps> = ({ children }) => {
-  const [dataForm, setDataForm] = useState<(Employers | Customers | Task)[]>(
-    []
-  );
+  const [dataForm, setDataForm] = useState<
+    (Employers | Customers | Task | Emails)[]
+  >([]);
 
-  const postData = async (url: string, data: Employers | Customers | Task) => {
+  const postData = async (
+    url: string,
+    data: Employers | Customers | Task | Emails
+  ) => {
     try {
       const res = await axios.post(url, data);
       if (res.status === 201) {
@@ -63,7 +77,7 @@ const FormContext: React.FC<FormContextProps> = ({ children }) => {
   };
 
   const onSubmitData = async (
-    data: Employers | Customers | Task,
+    data: Employers | Customers | Task | Emails,
     field: string
   ) => {
     switch (field) {
@@ -73,8 +87,11 @@ const FormContext: React.FC<FormContextProps> = ({ children }) => {
       case "Customers":
         await postData("/api/customer/add", data);
         break;
-      default:
+      case "Tasks":
         await postData("/api/task/create", data);
+        break;
+      case "Emails":
+        await postData("/api/email/config", data);
         break;
     }
   };

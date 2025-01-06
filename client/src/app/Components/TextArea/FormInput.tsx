@@ -1,5 +1,7 @@
 import { useFormContext } from "@/context/FormContext";
 import React from "react";
+import Router from "next/router";
+import baseClient from "@/api/BaseClient";
 
 interface FormInputProps {
   close: () => void;
@@ -23,6 +25,9 @@ export default function FormInput({
   fields,
 }: FormInputProps) {
   const [clicked, setClicked] = React.useState<boolean>(false);
+  const [selectBoxData, setSelectBoxData] = React.useState<
+    { name: string; userId: string }[]
+  >([]);
   const [data, setData] = React.useState({
     input_one: "",
     input_two: "",
@@ -32,7 +37,6 @@ export default function FormInput({
     input_six: "",
   });
   const { onSubmitData } = useFormContext();
-
   const handleSubmit = () => {
     let submitData;
     if (
@@ -66,10 +70,22 @@ export default function FormInput({
         break;
       case "Task":
         submitData = {
+          taskId: "1",
           description: data.input_one,
+          assignedTo: data.input_two,
+          dueDate: new Date(data.input_three),
+          priority: data.input_four,
+          staus: "Progress",
         };
-
         break;
+      case "Emails":
+        submitData = {
+          host: data.input_one,
+          port: data.input_two,
+          user: data.input_three,
+          password: data.input_four,
+          filed: "Emails",
+        };
       default:
         console.error("Unknown field type");
         return;
@@ -78,7 +94,22 @@ export default function FormInput({
     close();
     setClicked(!clicked);
   };
+  const SelectBoxFetchData = async () => {
+    const res = await baseClient("atalay").get("api/task/user/list");
+    setSelectBoxData(res.data);
+  };
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedOption = e.target.options[e.target.selectedIndex];
+    const selectedId = selectedOption.dataset.id;
 
+    setData({ ...data, input_two: selectedId || "" });
+  };
+
+  React.useEffect(() => {
+    if (fields === "Task") {
+      SelectBoxFetchData();
+    }
+  }, []);
   return (
     <div className="flex fixed top-0 left-0 w-full h-full z-49 justify-center items-center bg-black bg-opacity-50">
       <div className="bg-[#171c1e] p-8 rounded-lg z-50 mt-4 relative shadow-lg w-full max-w-md">
@@ -122,14 +153,36 @@ export default function FormInput({
           >
             {textTwo}
           </label>
-          <input
-            type="text"
-            id="input2"
-            name="input2"
-            onChange={(e) => setData({ ...data, input_two: e.target.value })}
-            placeholder={textTwo}
-            className="mt-1 block w-full px-3 py-2 border text-white bg-[#141517] border-[#494d55] rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-          />
+          {
+            // @atalayozyildirim
+            Router.pathname === "/tasks" ? (
+              selectBoxData && (
+                <select
+                  id="input2"
+                  name="input2"
+                  onChange={handleSelectChange}
+                  className="mt-1 block w-full px-3 py-2 p-4 border text-white bg-[#141517] border-[#494d55] rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                >
+                  {selectBoxData.map((item, index) => (
+                    <option key={index} value={item.name} data-id={item.userId}>
+                      {item.name}
+                    </option>
+                  ))}
+                </select>
+              )
+            ) : (
+              <input
+                type="text"
+                id="input2"
+                name="input2"
+                onChange={(e) =>
+                  setData({ ...data, input_two: e.target.value })
+                }
+                placeholder={textTwo}
+                className="mt-1 block w-full px-3 py-2 border text-white bg-[#141517] border-[#494d55] rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              />
+            )
+          }
         </div>
         <div className="w-full max-w-xs mx-auto mt-4">
           <label
@@ -138,14 +191,29 @@ export default function FormInput({
           >
             {textThree}
           </label>
-          <input
-            type="text"
-            id="input3"
-            name="input3"
-            onChange={(e) => setData({ ...data, input_three: e.target.value })}
-            placeholder={textThree}
-            className="mt-1 block w-full px-3 py-2 border  text-white bg-[#141517] border-[#494d55] rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-          />
+          {Router.pathname === "/tasks" ? (
+            <input
+              type="date"
+              id="input3"
+              name="input3"
+              onChange={(e) =>
+                setData({ ...data, input_three: e.target.value })
+              }
+              placeholder={textThree}
+              className="mt-1 block w-full px-3 py-2 border text-white bg-[#141517] border-[#494d55] rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            />
+          ) : (
+            <input
+              type="text"
+              id="input3"
+              name="input3"
+              onChange={(e) =>
+                setData({ ...data, input_three: e.target.value })
+              }
+              placeholder={textThree}
+              className="mt-1 block w-full px-3 py-2 border text-white bg-[#141517] border-[#494d55] rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            />
+          )}
         </div>
         <div className="w-full max-w-xs mx-auto mt-4">
           <label

@@ -1,10 +1,52 @@
-import React from "react";
+import React, { useEffect } from "react";
 import EmailCard from "../Card/EmailCard";
 import EmailDetailCard from "../Card/EmailDetailCard";
+import FormInput from "../TextArea/FormInput";
+import { useADDNavbar } from "@/context/AddNavbarContext";
+import baseClient from "@/api/BaseClient";
+import { useAuth } from "@/context/AuthContext";
 
 export default function MailComp() {
+  const { showAdd, showAddI } = useADDNavbar();
+  const { user } = useAuth();
+  const [data, setData] = React.useState<string[]>([]);
+
+  const fecthDataEmail = async () => {
+    const res = await baseClient("ayna").post("api/email/get/config", {
+      userId: user?.id,
+    });
+    const { host, port, auth, tls, secure } = res.data;
+
+    const getAllEmail = await baseClient("ayna").post("api/email/inbox", {
+      userId: user?.id,
+      user: auth.user,
+      password: auth.password,
+      host: host,
+      port: port,
+      tls: tls,
+      secure: secure,
+    });
+
+    setData(getAllEmail.data);
+  };
+
+  useEffect(() => {
+    fecthDataEmail();
+  }, []);
+
+  console.log(data);
   return (
     <>
+      {showAdd && (
+        <FormInput
+          close={showAddI}
+          fields="Emails"
+          textOne="Host"
+          textTwo="Port"
+          textThree="Auth user"
+          textFour="Password"
+        />
+      )}
       <div className="p-10 w-full  min-h-screen">
         <div className="w-full h-screen flex ">
           <div className="suç ortagım paket sorguda dedim kekeme w-2/3 rounded-xl border p-5  border-[#27272a] rounded-tr-none rounded-br-none -ml-16 -mt-2 min-h-screen overflow-y-auto">
