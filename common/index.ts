@@ -16,3 +16,4 @@ export * from "./src/event/invoice-created-event";
 export * from "./src/event/customer-created-event";
 export * from "./src/middleware/sanitizeMiddleware";
 export * from "./src/event/user-created-event";
+export * from "./src/event/user-email";

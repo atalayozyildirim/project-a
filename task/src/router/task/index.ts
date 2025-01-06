@@ -143,7 +143,7 @@ router.get(
     if (!errors.isEmpty()) {
       throw new Error("Not valid params !");
     }
-    const tasks = await Task.find()
+    const tasks = await Task.find({})
       .skip(parseInt(page) * 10)
       .limit(10);
 

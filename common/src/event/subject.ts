@@ -19,4 +19,5 @@ export enum Subject {
   InvoiceCreated = "invoice:created",
   CustomerCreated = "customer:created",
   UserCreated = "user:created",
+  UserEmailCreatad = "user:email:created",
 }

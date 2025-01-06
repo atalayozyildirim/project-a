@@ -6,6 +6,7 @@ import { AuthPublisherCreated } from "../../event/publisher.ts/auth-publisher-cr
 import { Subject } from "microserivce-common";
 import { rabbit } from "../../event/rabbitmqWrapper";
 import { UserPublisherCreated } from "../../event/publisher.ts/user-publisher-created";
+import { UserPublisherEmailCreated } from "../../event/publisher.ts/user-email-publisher";
 
 const router = express.Router();
 
@@ -35,6 +36,16 @@ router.post("/register", [
       role: "",
     });
 
+    await new UserPublisherEmailCreated(rabbit.client).publish(
+      Subject.UserEmailCreatad,
+      {
+        email: user.email,
+        name: user.name,
+        tasks: [],
+        id: user.id,
+        role: "user",
+      }
+    );
     await user.save();
 
     res.status(201).json({ message: "User created", redirect: "/login" });
