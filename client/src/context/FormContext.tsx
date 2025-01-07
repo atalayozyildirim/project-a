@@ -65,6 +65,7 @@ const FormContext: React.FC<FormContextProps> = ({ children }) => {
     data: Employers | Customers | Task | Emails
   ) => {
     try {
+      console.log("data", data);
       const res = await axios.post(url, data);
       if (res.status === 201) {
         setDataForm((prev) => [...prev, data]);

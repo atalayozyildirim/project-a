@@ -231,22 +231,25 @@ export default function FormInput({
             className="mt-1 block w-full px-3 py-2 border text-white bg-[#141517] border-[#494d55] rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
         </div>
-        <div className="w-full max-w-xs mx-auto mt-4">
-          <label
-            htmlFor="input3"
-            className="block text-sm font-medium text-gray-700"
-          >
-            {textFive}
-          </label>
-          <input
-            type="text"
-            id="input5"
-            name="input5"
-            onChange={(e) => setData({ ...data, input_five: e.target.value })}
-            placeholder={textFive}
-            className="mt-1 block w-full px-3 py-2 border text-white bg-[#141517] border-[#494d55] rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-          />
-        </div>
+        {textFive && (
+          <div className="w-full max-w-xs mx-auto mt-4">
+            <label
+              htmlFor="input3"
+              className="block text-sm font-medium text-gray-700"
+            >
+              {textFive}
+            </label>
+            <input
+              type="text"
+              id="input5"
+              name="input5"
+              onChange={(e) => setData({ ...data, input_five: e.target.value })}
+              placeholder={textFive}
+              className="mt-1 block w-full px-3 py-2 border text-white bg-[#141517] border-[#494d55] rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            />
+          </div>
+        )}
+
         {textSix && (
           <div className="w-full max-w-xs mx-auto mt-4">
             <label
