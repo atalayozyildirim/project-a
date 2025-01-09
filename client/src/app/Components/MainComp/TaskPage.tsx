@@ -22,7 +22,7 @@ export default function TaskPage({ data }: TaskPageProps) {
     <>
       {showAdd && (
         <FormInput
-          fields="Tasks"
+          fields="Task"
           textOne="Description"
           textTwo="AssignedTo"
           textThree="DueDate"

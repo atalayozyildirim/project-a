@@ -47,6 +47,7 @@ export default function FormInput({
       data.input_five === ""
     )
       return null;
+
     switch (fields) {
       case "Employers":
         submitData = {
@@ -81,11 +82,14 @@ export default function FormInput({
       case "Emails":
         submitData = {
           host: data.input_one,
-          port: data.input_two,
+          port: parseInt(data.input_two, 10),
           user: data.input_three,
           password: data.input_four,
+          userId: "defaultUserId",
+          tls: true,
           filed: "Emails",
         };
+        break;
       default:
         console.error("Unknown field type");
         return;
