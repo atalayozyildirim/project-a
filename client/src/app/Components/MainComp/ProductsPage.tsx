@@ -3,7 +3,18 @@ import React from "react";
 import FormInput from "../TextArea/FormInput";
 import CardTable from "../Card/CardTable";
 
-export default function ProductsPage() {
+interface Products {
+  id: string;
+  name: string;
+  price: string;
+  description: string;
+  v: string;
+}
+interface Props {
+  data: Products[];
+}
+
+export default function ProductsPage({ data }: Props) {
   const { showAddI, showAdd } = useADDNavbar();
   return (
     <>
@@ -23,7 +34,15 @@ export default function ProductsPage() {
           thead_two="Price"
           thead_three="Description"
           thead_four="Version"
-          data={[]}
+          data={data.map((item: Products) => {
+            return {
+              tbody_id: item.id,
+              tbody_one: item.name,
+              tbody_two: item.price,
+              tbody_three: item.description,
+              tbody_four: item.v,
+            };
+          })}
         />
       </div>
     </>

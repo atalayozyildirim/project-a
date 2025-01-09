@@ -101,7 +101,7 @@ const FormContext: React.FC<FormContextProps> = ({ children }) => {
         await postData("/api/email/config", data);
         break;
       case "Products":
-        await postData("/api/product/add", data);
+        await postData("/api/products/add", data);
         break;
     }
   };
