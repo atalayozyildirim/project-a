@@ -44,7 +44,7 @@ router.post(
     body("quantity").isNumeric().notEmpty(),
   ],
   async (req: Request, res: Response) => {
-    if (validationResult(req)) {
+    if (!validationResult(req)) {
       throw new Error("Bad Request");
     }
 

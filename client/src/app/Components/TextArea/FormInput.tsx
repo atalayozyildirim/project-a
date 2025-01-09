@@ -39,15 +39,16 @@ export default function FormInput({
   const { onSubmitData } = useFormContext();
   const handleSubmit = () => {
     let submitData;
-    if (
+    /* if (
       data.input_one === "" ||
       data.input_two === "" ||
       data.input_three === "" ||
       data.input_four === "" ||
       data.input_five === ""
     )
-      return null;
+      return null; */
 
+    console.log("Bu sayfanın fields değeri: ", fields);
     switch (fields) {
       case "Employers":
         submitData = {
@@ -69,7 +70,7 @@ export default function FormInput({
           phoneNumber: data.input_five,
         };
         break;
-      case "Task":
+      case "Tasks":
         submitData = {
           taskId: "1",
           description: data.input_one,
@@ -88,6 +89,14 @@ export default function FormInput({
           userId: "defaultUserId",
           tls: true,
           filed: "Emails",
+        };
+        break;
+      case "Products":
+        submitData = {
+          name: data.input_one,
+          price: parseFloat(data.input_two),
+          description: data.input_three,
+          v: parseInt(data.input_four, 10),
         };
         break;
       default:

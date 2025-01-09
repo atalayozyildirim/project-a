@@ -34,14 +34,20 @@ interface Emails {
   password: string;
   tls: boolean;
 }
+interface Products {
+  name: string;
+  price: number;
+  description: string;
+  v: number;
+}
 interface ContextProps {
   onSubmitData: (
-    data: Employers | Customers | Task | Emails,
+    data: Employers | Customers | Task | Emails | Products,
     field: string
   ) => Promise<void>;
-  dataForm: (Employers | Customers | Task | Emails)[];
+  dataForm: (Employers | Customers | Task | Emails | Products)[];
   setDataForm: React.Dispatch<
-    React.SetStateAction<(Employers | Customers | Task | Emails)[]>
+    React.SetStateAction<(Employers | Customers | Task | Emails | Products)[]>
   >;
 }
 
@@ -57,12 +63,12 @@ interface FormContextProps {
 
 const FormContext: React.FC<FormContextProps> = ({ children }) => {
   const [dataForm, setDataForm] = useState<
-    (Employers | Customers | Task | Emails)[]
+    (Employers | Customers | Task | Emails | Products)[]
   >([]);
 
   const postData = async (
     url: string,
-    data: Employers | Customers | Task | Emails
+    data: Employers | Customers | Task | Emails | Products
   ) => {
     try {
       console.log("data", data);
@@ -78,7 +84,7 @@ const FormContext: React.FC<FormContextProps> = ({ children }) => {
   };
 
   const onSubmitData = async (
-    data: Employers | Customers | Task | Emails,
+    data: Employers | Customers | Task | Emails | Products,
     field: string
   ) => {
     switch (field) {
@@ -93,6 +99,9 @@ const FormContext: React.FC<FormContextProps> = ({ children }) => {
         break;
       case "Emails":
         await postData("/api/email/config", data);
+        break;
+      case "Products":
+        await postData("/api/product/add", data);
         break;
     }
   };

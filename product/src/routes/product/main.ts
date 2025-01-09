@@ -6,6 +6,7 @@ import { ProductCreatedPublisher } from "../../events/publish/ProductPublisher";
 import { rabbit } from "../../events/RabbitMQWrapper";
 import { Subject } from "microserivce-common";
 import { ProductUpdatedPublisher } from "../../events/publish/product-updated-publisher";
+import crypto from "crypto";
 
 const router = express.Router();
 
@@ -52,14 +53,15 @@ router.post(
     body("name").isString().notEmpty().withMessage("Not valid !"),
     body("price").isNumeric().notEmpty().withMessage("Not valid !"),
     body("description").isString().notEmpty().withMessage("Not valid !"),
-    body("orderId").isString().notEmpty().withMessage("Not valid !"),
     body("v").isNumeric().notEmpty().withMessage("Not valid !"),
   ],
   async (req: Request, res: Response) => {
     if (!validationResult(req).isEmpty()) {
       throw new Error("Validation error");
     }
-    const { name, price, description, orderId, v } = req.body;
+    const { name, price, description, v } = req.body;
+
+    const orderId = crypto.randomBytes(16).toString("hex");
 
     const data = Product.build({
       name,
