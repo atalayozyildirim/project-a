@@ -13,9 +13,9 @@ interface Products {
 interface Props {
   data: Products[];
 }
-
 export default function ProductsPage({ data }: Props) {
   const { showAddI, showAdd } = useADDNavbar();
+  console.log("ProductsPage", data);
   return (
     <>
       {showAdd && (
@@ -23,16 +23,16 @@ export default function ProductsPage({ data }: Props) {
           fields="Products"
           close={showAddI}
           textOne="Name"
-          textTwo="Price"
-          textThree="Description"
+          textTwo="Description"
+          textThree="Price"
         />
       )}
       <div className="p-10 w-full min-h-screen">
         <h1 className="text-2xl font-bold hover:underline">{"Products"}</h1>
         <CardTable
           thead_one="Products Name"
-          thead_two="Price"
-          thead_three="Description"
+          thead_two="Description"
+          thead_three="Price"
           thead_four="Version"
           data={data.map((item: Products) => {
             return {

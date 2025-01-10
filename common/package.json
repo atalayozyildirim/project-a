@@ -1,6 +1,6 @@
 {
   "name": "microserivce-common",
-  "version": "1.0.99",
+  "version": "1.0.100",
   "main": "index.ts",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -15,7 +15,8 @@
     "express-validator": "^7.2.0",
     "jsonwebtoken": "^9.0.2",
     "sanitize-html": "^2.14.0",
-    "tsc-watch": "^6.2.1"
+    "tsc-watch": "^6.2.1",
+    "@types/jsonwebtoken": "^9.0.7"
   },
   "author": "Atalay ozyildirim",
   "license": "ISC",
