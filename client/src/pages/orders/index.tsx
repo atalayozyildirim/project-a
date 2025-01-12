@@ -1,8 +1,8 @@
 import { Layout } from "@/app/Components/Layout/Layout";
 import { OrdersPage } from "@/app/Components/MainComp/OrdersPage";
-import "./../style/globals.css";
+import "../../style/globals.css";
 
-export const index = () => {
+const index = () => {
   return (
     <>
       <Layout>
@@ -11,3 +11,5 @@ export const index = () => {
     </>
   );
 };
+
+export default index;

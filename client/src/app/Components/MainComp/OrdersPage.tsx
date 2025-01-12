@@ -4,7 +4,7 @@ export const OrdersPage = () => {
   return (
     <>
       <div className="min-h-screen w-full p-10">
-        <h1 className="text-2xl font-bold hover:underline">Detail</h1>
+        <h1 className="text-2xl font-bold hover:underline">Order Detail</h1>
         <div className="mt-5">
           <table className="table-auto w-full rounded-md">
             <thead className="border border-[#27272a]  text-white">

@@ -1,9 +1,9 @@
 import { Layout } from "@/app/Components/Layout/Layout";
 import { useRouter } from "next/router";
 import React from "react";
-import "./../style/globals.css";
+import "../../style/globals.css";
 
-export const OrdersDetail = () => {
+const OrdersDetail = () => {
   const router = useRouter();
   const { detail } = router.query;
   return (
@@ -23,3 +23,5 @@ export const OrdersDetail = () => {
     </>
   );
 };
+
+export default OrdersDetail;
