@@ -26,7 +26,7 @@ app.listen(3000, async () => {
 
     await rabbit.connect(Bun.env.RABBITMQ_URI!);
 
-    await new OrderListener(rabbit.client!).listen();
+    //  await new OrderListener(rabbit.client!).listen();
     await new InvoiceListener(rabbit.client!).listen();
     await new CustomerListener(rabbit.client!).listen();
 

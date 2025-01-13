@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import { OrderStatus } from "microserivce-common";
 
 interface OrderAttr {
+  orderId: string;
   userId: string;
   quantity: number;
   expiresAt: Date;
@@ -10,6 +11,7 @@ interface OrderAttr {
 }
 
 interface OrderDoc extends mongoose.Document {
+  orderId: string;
   userId: string;
   quantity: number;
   expiresAt: Date;

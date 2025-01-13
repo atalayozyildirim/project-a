@@ -17,6 +17,17 @@ export class OrderCreatedListener extends BaseConsumer<OrderCreatedEvent> {
       console.log("Order already exists!");
     }
 
-    await Order.create({});
+    const res = await Order.build({
+      orderId: data.id,
+      userId: data.userId,
+      quantity: data.quantity,
+      expiresAt: new Date(data.expiresAt),
+      status: data.status,
+      v: data.version,
+    });
+
+    await res.save();
+
+    console.log("Order created!", res);
   }
 }

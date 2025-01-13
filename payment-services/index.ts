@@ -4,6 +4,7 @@ import { rabbit } from "./src/event/rabbitmqWrapper";
 import router from "./src/routes";
 import { checkAuth } from "microserivce-common";
 import cookieParser from "cookie-parser";
+import { OrderCreatedListener } from "./src/event/listener/Order-Created-Listener";
 const app = express();
 
 app.use(express.json());
@@ -20,6 +21,8 @@ app.listen(3000, async () => {
 
     await connectDb();
     await rabbit.connect(Bun.env.RABBITMQ_URI!);
+
+    await new OrderCreatedListener(rabbit.client).listen();
 
     console.log("Server is running on port 3000");
   } catch (error) {

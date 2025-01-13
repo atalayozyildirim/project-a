@@ -3,6 +3,7 @@ import { Order } from "./OrderModel.ts";
 import { OrderStatus } from "microserivce-common";
 
 interface ProductAttr {
+  productId: string;
   name: string;
   price: number;
   description: string;
@@ -22,6 +23,7 @@ export interface ProductModel extends mongoose.Model<ProductDoc> {
 }
 
 const productSchema = new mongoose.Schema({
+  productId: { type: String, required: true, unique: true },
   name: { type: String, required: true },
   price: { type: Number, required: true },
   description: { type: String, required: true },

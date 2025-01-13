@@ -40,7 +40,7 @@ router.get(
 router.post(
   "/add",
   [
-    body("productId").isString().notEmpty(),
+    body("productsId").isString().notEmpty(),
     body("quantity").isNumeric().notEmpty(),
   ],
   async (req: Request, res: Response) => {
@@ -50,7 +50,7 @@ router.post(
 
     const { productId } = req.body;
 
-    const product = await Product.findById(productId).exec();
+    const product = await Product.findOne(productId);
 
     if (!product) {
       throw new Error("Product not found");

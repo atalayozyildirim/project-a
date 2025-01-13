@@ -15,9 +15,10 @@ export class ProductCreatedListener extends BaseConsumer<ProductCreatedEvent> {
     msg: Message & Channel
   ): Promise<void> {
     try {
-      const { name, description, price, v } = data;
+      const { name, description, price, v, id } = data;
 
       const product = await Product.build({
+        productId: id,
         name,
         description,
         price,

@@ -1,71 +1,68 @@
+import React, { useState, useEffect } from "react";
 import {
-  PaymentElement,
   useStripe,
   useElements,
+  CardElement,
+  PaymentElement,
 } from "@stripe/react-stripe-js";
-import React, { useState } from "react";
+import axios from "axios";
 
-export default function PaymentCard() {
+const PaymentCard = () => {
   const stripe = useStripe();
   const elements = useElements();
+  const [clientSecret, setClientSecret] = useState("");
 
-  const [message, setMessage] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    axios
+      .post("/api/payment/create-payment-intent", {
+        amount: 1000,
+        currency: "usd",
+      })
+      .then((response) => {
+        setClientSecret(response.data.clientSecret);
+      })
+      .catch((error) => {
+        console.error("Error creating payment intent:", error);
+      });
+  }, []);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+
     if (!stripe || !elements) {
       return;
     }
 
-    setIsLoading(true);
-    const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        // Make sure to change this to your payment completion page
-        return_url: "/success",
-      },
-    });
+    const cardElement = elements.getElement(CardElement);
 
-    if (error.type === "card_error" || error.type === "validation_error") {
-      setMessage(error.message || "");
+    const { error, paymentIntent } = await stripe.confirmCardPayment(
+      clientSecret,
+      {
+        payment_method: {
+          card: cardElement!,
+        },
+      }
+    );
+
+    if (error) {
+      console.error(error);
     } else {
-      setMessage("An unexpected error occurred.");
+      console.log("PaymentIntent:", paymentIntent);
+      // Ödeme işlemini sunucuya gönde
     }
-    setIsLoading(false);
   };
 
   return (
-    <>
-      <form id="payment-form" onSubmit={handleSubmit}>
+    <div className="w-full flex justify-center items-center">
+      <form onSubmit={handleSubmit} className="payment-form">
         <PaymentElement id="payment-element" />
-        <button disabled={isLoading || !stripe || !elements} id="submit">
-          <span id="button-text">
-            {isLoading ? (
-              <div className="spinner" id="spinner"></div>
-            ) : (
-              "Pay now"
-            )}
-          </span>
+        {clientSecret && <PaymentElement id="payment-element" />}
+        <button type="submit" disabled={!stripe || !clientSecret}>
+          Pay
         </button>
-        {/* Show any error or success messages */}
-        {message && <div id="payment-message">{message}</div>}
       </form>
-      {/* [DEV]: For demo purposes only, display dynamic payment methods annotation and integration checker */}
-      <div id="dpm-annotation">
-        <p>
-          Payment methods are dynamically displayed based on customer location,
-          order amount, and currency.&nbsp;
-          <a
-            href={""}
-            target="_blank"
-            rel="noopener noreferrer"
-            id="dpm-integration-checker"
-          >
-            Preview payment methods by transaction
-          </a>
-        </p>
-      </div>
-    </>
+    </div>
   );
-}
+};
+
+export default PaymentCard;

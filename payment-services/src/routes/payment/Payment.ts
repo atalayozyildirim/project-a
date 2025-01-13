@@ -16,6 +16,31 @@ router.get("/", (req: Request, res: Response) => {
 });
 
 router.post(
+  "/create-payment-intent",
+  [
+    body("amount").isNumeric().notEmpty().withMessage("Amount is required"),
+    body("currency").isString().notEmpty().withMessage("Currency is required"),
+  ],
+  async (req: Request, res: Response) => {
+    if (!validationResult(req)) {
+      throw new Error("Error payment intent");
+    }
+    const { amount, currency } = req.body;
+
+    try {
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: amount,
+        currency: currency,
+        payment_method_types: ["card"],
+      });
+
+      res.status(201).json({ clientSecret: paymentIntent.client_secret });
+    } catch (error) {
+      res.status(400).json({ message: error });
+    }
+  }
+);
+router.post(
   "/",
   [
     body("orderId")
