@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import {
   useStripe,
   useElements,
-  CardElement,
   PaymentElement,
 } from "@stripe/react-stripe-js";
 import axios from "axios";
@@ -33,31 +32,32 @@ const PaymentCard = () => {
       return;
     }
 
-    const cardElement = elements.getElement(CardElement);
-
-    const { error, paymentIntent } = await stripe.confirmCardPayment(
-      clientSecret,
-      {
-        payment_method: {
-          card: cardElement!,
-        },
-      }
-    );
+    const { error } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: "https://tickets.dev/api/payment/success",
+      },
+    });
 
     if (error) {
       console.error(error);
     } else {
-      console.log("PaymentIntent:", paymentIntent);
-      // Ödeme işlemini sunucuya gönde
+      // Ödeme işlemini sunucuya gönderin
     }
   };
 
   return (
     <div className="w-full flex justify-center items-center">
-      <form onSubmit={handleSubmit} className="payment-form">
-        <PaymentElement id="payment-element" />
+      <form
+        onSubmit={handleSubmit}
+        className="payment-form bg-[#171c1e] p-5 w-1/2 rounded-xl h-96"
+      >
         {clientSecret && <PaymentElement id="payment-element" />}
-        <button type="submit" disabled={!stripe || !clientSecret}>
+        <button
+          type="submit"
+          disabled={!stripe || !clientSecret}
+          className="p-2 bg-[#53FC18] text-white rounded-md w-36 mt-8"
+        >
           Pay
         </button>
       </form>
