@@ -15,6 +15,10 @@ export class UserListener extends BaseConsumer<UserCreatedEvent> {
       throw new Error("User data is required");
     }
 
+    const existingUser = await User.findOne({ userId: data.id });
+    if (existingUser) {
+      return;
+    }
     const user = User.build({
       userId: data.id,
       name: data.name,

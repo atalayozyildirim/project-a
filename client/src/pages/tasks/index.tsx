@@ -31,10 +31,20 @@ const Tasks = ({
         data={
           repo &&
           repo.map(
-            (item: { taskId: string; description: string; status: string }) => {
+            (item: {
+              taskId: string;
+              description: string;
+              assignedTo: string;
+              dueDate: string;
+              priority: string;
+              status: string;
+            }) => {
               return {
                 task: item.taskId,
                 description: item.description,
+                assignedTo: item.assignedTo,
+                dueDate: item.dueDate,
+                priority: item.priority,
                 status: item.status,
               };
             }

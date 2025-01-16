@@ -24,7 +24,7 @@ interface Task {
   assignedTo: string;
   dueDate: Date;
   priority: string;
-  staus: string;
+  status: string;
 }
 interface Emails {
   userId: string;

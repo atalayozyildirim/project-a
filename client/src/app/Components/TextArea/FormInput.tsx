@@ -77,7 +77,7 @@ export default function FormInput({
           assignedTo: data.input_two,
           dueDate: new Date(data.input_three),
           priority: data.input_four,
-          staus: "Progress",
+          status: "Progress",
         };
         break;
       case "Emails":

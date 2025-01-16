@@ -32,7 +32,6 @@ export default function CustomerPage({ data }: CustomersProps) {
 
   const transformData = [...data, ...filteredDataForm];
 
-  console.log(transformData);
   return (
     <>
       {showAdd && (
