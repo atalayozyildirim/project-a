@@ -6,7 +6,7 @@ import baseClient from "@/api/BaseClient";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
-    const { data } = await baseClient(context).get("/api/task/list/1");
+    const { data } = await baseClient(context).get("/api/task/list/0");
 
     return {
       props: {
@@ -21,6 +21,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 };
+
 const Tasks = ({
   repo,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {

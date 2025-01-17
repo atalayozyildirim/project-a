@@ -2,6 +2,7 @@ import { useFormContext } from "@/context/FormContext";
 import React from "react";
 import Router from "next/router";
 import baseClient from "@/api/BaseClient";
+import { useAuth } from "@/context/AuthContext";
 
 interface FormInputProps {
   close: () => void;
@@ -37,6 +38,7 @@ export default function FormInput({
     input_six: "",
   });
   const { onSubmitData } = useFormContext();
+  const { user } = useAuth();
   const handleSubmit = () => {
     let submitData;
     /* if (
@@ -47,8 +49,6 @@ export default function FormInput({
       data.input_five === ""
     )
       return null; */
-
-    console.log("Bu sayfanın fields değeri: ", fields);
     switch (fields) {
       case "Employers":
         submitData = {
@@ -86,7 +86,7 @@ export default function FormInput({
           port: parseInt(data.input_two, 10),
           user: data.input_three,
           password: data.input_four,
-          userId: "defaultUserId",
+          userId: user?.id || "",
           tls: true,
           filed: "Emails",
         };
@@ -94,9 +94,9 @@ export default function FormInput({
       case "Products":
         submitData = {
           name: data.input_one,
-          price: parseFloat(data.input_two),
-          description: data.input_three,
-          v: parseInt(data.input_four, 10),
+          description: data.input_two,
+          price: parseFloat(data.input_three),
+          v: 3,
         };
         break;
       default:
@@ -177,9 +177,7 @@ export default function FormInput({
                   className="mt-1 block w-full px-3 py-2 p-4 border text-white bg-[#141517] border-[#494d55] rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 >
                   <option value="" disabled selected>
-                    Vurrrr şişenin Dibineeeeeee atım dertleri hep içime içime en
-                    sonunda kaldım tek başıma koy kadehin içine vuralım bu gece
-                    vurrr şişenin dibine
+                    Nasılsın aşkta
                   </option>
                   {selectBoxData.map((item, index) => (
                     <option key={index} value={item.name} data-id={item.userId}>

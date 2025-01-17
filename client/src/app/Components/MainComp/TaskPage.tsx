@@ -69,6 +69,7 @@ export default function TaskPage({ data }: TaskPageProps) {
                     </td>
                     <td className="px-4 py-2">
                       <DropDown
+                        data_id={item.task}
                         label_one="Edit"
                         label_two="Detail"
                         label_three="Delete"

@@ -38,8 +38,8 @@ export default function ProductsPage({ data }: Props) {
             return {
               tbody_id: item.id,
               tbody_one: item.name,
-              tbody_two: item.price,
-              tbody_three: item.description,
+              tbody_two: item.description,
+              tbody_three: item.price,
               tbody_four: item.v,
             };
           })}

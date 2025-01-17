@@ -38,6 +38,13 @@ export default function DropDown({
     }
   };
 
+  const labelTwoClick = async (id: string | undefined) => {
+    switch (pathname) {
+      case "/tasks":
+        Router.push(`/tasks/${id}`);
+        break;
+    }
+  };
   return (
     <>
       <DropdownMenu>
@@ -61,7 +68,9 @@ export default function DropDown({
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>{label_one}</DropdownMenuItem>
-          <DropdownMenuItem>{label_two}</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => labelTwoClick(data_id)}>
+            {label_two}
+          </DropdownMenuItem>
           {label_three && (
             <DropdownMenuItem onClick={() => deleteClick(data_id)}>
               {label_three}

@@ -14,6 +14,11 @@ export class UserCreatedListener extends BaseConsumer<UserCreatedEmailEvent> {
     if (!data) {
       throw new Error("User data is required");
     }
+    const existingUser = await User.findOne({ userId: data.id });
+
+    if (existingUser) {
+      return;
+    }
 
     await User.build({
       email: data.email,
