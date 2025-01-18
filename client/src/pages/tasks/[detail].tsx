@@ -55,7 +55,7 @@ export default function TaskDetail({
   };
   return (
     <>
-      {repo.length > 0 ? (
+      {repo ? (
         <Layout>
           <div className="min-h-screen  w-full p-10">
             <h1 className="text-2xl font-bold text-left hover:underline">
