@@ -4,12 +4,16 @@ interface DetailCardProps {
   icon: React.ReactNode;
   title: string;
   value: string;
+  id: number;
 }
 
-export const DetailCard = ({ icon, title, value }: DetailCardProps) => {
+export const DetailCard = ({ icon, title, value, id }: DetailCardProps) => {
   return (
     <>
-      <div className="w-52 min-h-24 flex flex-col gap-2 p-4 bg-[#141517] rounded-xl shadow-md">
+      <div
+        className="w-56 min-h-24 flex flex-col gap-2 p-4 bg-[#141517] rounded-xl shadow-md"
+        data-key={id}
+      >
         <div className="flex flex-row justify-start items-center gap-2">
           {title}
         </div>

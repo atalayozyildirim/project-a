@@ -13,12 +13,12 @@ export default function MailComp() {
 
   const fecthDataEmail = async () => {
     const res = await baseClient("ayna").post("api/email/get/config", {
-      userId: user?.id,
+      userId: user?.userId,
     });
     const { host, port, auth, tls, secure } = res.data;
 
     const getAllEmail = await baseClient("ayna").post("api/email/inbox", {
-      userId: user?.id,
+      userId: user?.userId,
       user: auth.user,
       password: auth.password,
       host: host,

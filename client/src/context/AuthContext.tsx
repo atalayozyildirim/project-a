@@ -9,7 +9,7 @@ interface AuthContextType {
   redirectTo: boolean;
   error: string;
   user: {
-    id: string;
+    userId: string;
     name: string;
     email: string;
   } | null;
@@ -25,7 +25,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [user, setUser] = useState<{
-    id: string;
+    userId: string;
     name: string;
     email: string;
   } | null>(null);

@@ -30,6 +30,67 @@ router.get("/sales", async (req: Request, res: Response) => {
     console.log(err);
   }
 });
+router.get("/home/all", async (req: Request, res: Response) => {
+  try {
+    const salesData = await Invoice.aggregate([
+      {
+        $group: {
+          _id: null,
+          totalAmount: { $sum: "$totalAmount" },
+        },
+      },
+    ]);
+    const orderData = await Order.aggregate([
+      {
+        $group: {
+          _id: null,
+          totalOrders: { $sum: "$quantity" },
+        },
+      },
+    ]);
+    const customerData = await Customer.aggregate([
+      {
+        $group: {
+          _id: null,
+          totalCustomers: { $addToSet: "$email" },
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          totalCustomers: { $size: "$totalCustomers" },
+        },
+      },
+    ]);
+
+    const formattedData = {
+      sales: salesData[0]?.totalAmount || 0,
+      orders: orderData[0]?.totalOrders || 0,
+      customers: customerData[0]?.totalCustomers || 0,
+    };
+
+    res.status(200).json(formattedData);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+router.get("/sales/all/total", async (req: Request, res: Response) => {
+  try {
+    const salesData = await Invoice.aggregate([
+      {
+        $group: {
+          _id: null,
+          totalAmount: { $sum: "$totalAmount" },
+        },
+      },
+    ]);
+
+    res.status(200).json(salesData);
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 router.get("/revenue/drop", async (req: Request, res: Response) => {
   try {

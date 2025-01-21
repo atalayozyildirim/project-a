@@ -66,7 +66,21 @@ router.get(
     res.status(200).json(task);
   }
 );
+router.post(
+  "/my/task",
+  [body("userId").notEmpty().withMessage("Test")],
+  async (req: Request, res: Response) => {
+    if (!validationResult(req)) {
+      throw new Error("Not valid params !");
+    }
 
+    const { userId } = req.body;
+
+    const tasks = await Task.find({ assignedTo: userId });
+
+    res.status(200).json(tasks);
+  }
+);
 router.get("/user/list", async (req: Request, res: Response) => {
   const users = await User.find();
 

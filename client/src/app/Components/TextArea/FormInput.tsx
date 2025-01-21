@@ -86,7 +86,7 @@ export default function FormInput({
           port: parseInt(data.input_two, 10),
           user: data.input_three,
           password: data.input_four,
-          userId: user?.id || "",
+          userId: user?.userId || "",
           tls: true,
           filed: "Emails",
         };
