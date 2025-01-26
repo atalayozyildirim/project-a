@@ -3,6 +3,7 @@ import type { Request, Response } from "express";
 import { body, validationResult, param } from "express-validator";
 import Invoice from "../../db/invocieModel";
 import { InvoicePublisher } from "../../event/publiher/InvoicePublisher";
+import crypto from "crypto";
 import { rabbit } from "../../event/RabbitmqWrapper";
 import { Subject } from "microserivce-common";
 
@@ -30,9 +31,8 @@ router.post(
     body("status").isString().notEmpty().withMessage("Status is required"),
   ],
   async (req: Request, res: Response) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      throw new Error("Invalid  data");
+    if (!validationResult(req)) {
+      throw new Error("Invalid input");
     }
 
     const invoiceExists = await Invoice.findOne({
@@ -41,6 +41,11 @@ router.post(
     if (invoiceExists) {
       throw new Error("Invoice number already exists");
     }
+
+    const randomUniqueNumber = crypto.randomBytes(4).toString("hex");
+
+    req.body.invoiceNumber = randomUniqueNumber;
+    req.body.status = "pending";
 
     const invoice = new Invoice(req.body);
 
@@ -68,6 +73,9 @@ router.get(
   "/:id",
   [param("id").isMongoId().notEmpty().withMessage("Not valid params")],
   async (req: Request, res: Response) => {
+    if (!validationResult(req)) {
+      throw new Error("Invalid input");
+    }
     const invoice = await Invoice.findById(req.params.id);
     if (!invoice) {
       throw new Error("Invoice not found");
@@ -86,7 +94,7 @@ router.get(
       .withMessage("Not valid page params"),
   ],
   async (req: Request, res: Response) => {
-    if (!validationResult(req).isEmpty()) {
+    if (!validationResult(req)) {
       throw new Error("Invalid page number");
     }
 

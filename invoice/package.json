@@ -16,7 +16,7 @@
     "cookie-parser": "^1.4.7",
     "express": "^4.21.2",
     "express-validator": "^7.2.1",
-    "microserivce-common": "^1.0.94",
-    "mongoose": "^8.9.3"
+    "microserivce-common": "^1.0.100",
+    "mongoose": "^8.9.5"
   }
 }

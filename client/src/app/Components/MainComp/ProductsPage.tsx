@@ -15,7 +15,6 @@ interface Props {
 }
 export default function ProductsPage({ data }: Props) {
   const { showAddI, showAdd } = useADDNavbar();
-  console.log("ProductsPage", data);
   return (
     <>
       {showAdd && (

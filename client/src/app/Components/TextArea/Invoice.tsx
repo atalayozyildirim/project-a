@@ -81,7 +81,7 @@ export default function Invoice(props: InvoiceProps) {
     try {
       const response = await baseClient("atalay").post("api/invoice/add", {
         customerName: name,
-        customerEmail: "",
+        customerEmail: "test@test.com",
         customerAddress: customerAddress,
         invoiceDate: new Date(),
         dueDate: new Date(new Date().setDate(new Date().getDate() + 1)),
