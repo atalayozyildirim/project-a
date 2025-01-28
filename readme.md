@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project is a microservices-based crm application that includes several services such as Notification,Expiration,Chart,Auth,Order,Invoice,Payment services. These services interact with RabbitMQ,MongoDB, and Redis to provide a robust and scalable system.
+This project is a microservices-based application that includes several services such as Notification,Expiration,Chart,Auth,Order,Invoice,Payment services. These services interact with RabbitMQ,MongoDB, and Redis to provide a robust and scalable system.
 
 ## Services
 - Auth
